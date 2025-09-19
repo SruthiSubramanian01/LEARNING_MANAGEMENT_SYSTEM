@@ -1,0 +1,279 @@
+{% extends 'base.html'%}
+{% load static %}
+
+{% block content %}
+<!-- Enhanced Hero Section -->
+<section class="about-hero position-relative py-5 d-flex align-items-center">
+    <div class="overlay position-absolute top-0 start-0 w-100 h-100"></div>
+    <div class="container position-relative py-5">
+        <div class="row">
+            <div class="col-12 text-center text-white">
+                <h1 class="display-4 fw-bold mb-3">ABOUT WISDOM LEARNING ACADEMY</h1>
+                <p class="lead mb-4">Excellence in Education Since 2023</p>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb justify-content-center">
+                        <li class="breadcrumb-item"><a href="{% url 'home' %}" class="text-white">Home</a></li>
+                        <li class="breadcrumb-item active text-white" aria-current="page">About Us</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Stats Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-md-3 col-6 text-center">
+                <div class="stat-card p-3">
+                    <h2 class="fw-bold text-primary display-4">100%</h2>
+                    <p class="mb-0">Success Rate</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-6 text-center">
+                <div class="stat-card p-3">
+                    <h2 class="fw-bold text-primary display-4">9+</h2>
+                    <p class="mb-0">Expert Faculty</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-6 text-center">
+                <div class="stat-card p-3">
+                    <h2 class="fw-bold text-primary display-4">500+</h2>
+                    <p class="mb-0">Happy Students</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-6 text-center">
+                <div class="stat-card p-3">
+                    <h2 class="fw-bold text-primary display-4">2+</h2>
+                    <p class="mb-0">Years Experience</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Welcome Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 mb-5 mb-lg-0">
+                <div class="section-header mb-4">
+                    <span class="text-primary fw-semibold">WELCOME TO</span>
+                    <h2 class="fw-bold display-5">Wisdom Learning Academy</h2>
+                    <div class="title-underline bg-primary"></div>
+                </div>
+                <p class="lead fw-semibold">Since our establishment in 2023, we have proudly maintained a 100% success rate each year.</p>
+                <p>Welcome to Wisdom Learning Academy, one of the leading tuition centers in Koduvayur, Palakkad. We are dedicated to providing the finest education and guidance through our experienced faculty and comprehensive programs.</p>
+                <p>Along with academic excellence, we also focus on students' overall well-being by organizing extracurricular activities that create a stress-free learning environment.</p>
+                <p>By making quality education affordable, Wisdom Learning Academy remains committed to empowering students to achieve their goals in a supportive and well-equipped setting.</p>
+                <div class="mt-4">
+                    <a href="{% url 'courses' %}" class="btn btn-primary me-2">Our Courses</a>
+                    <a href="{% url 'contact' %}" class="btn btn-outline-primary">Contact Us</a>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="row g-3">
+                    <div class="col-6">
+                        <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&q=80&w=500" alt="Students learning" class="img-fluid rounded shadow">
+                    </div>
+                    <div class="col-6">
+                        <img src="https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&q=80&w=500" alt="Classroom environment" class="img-fluid rounded shadow mb-3">
+                        <img src="https://images.unsplash.com/photo-1523580494863-6f3031224c94?auto=format&fit=crop&q=80&w=500" alt="Teacher with students" class="img-fluid rounded shadow">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Mission & Vision Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row g-5">
+            <div class="col-lg-6">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body p-4 text-center">
+                        <div class="icon-container bg-primary bg-opacity-10 rounded-circle p-4 d-inline-block mb-4">
+                            <i class="bi bi-bullseye display-4 text-primary"></i>
+                        </div>
+                        <h3 class="card-title fw-bold">Our Mission</h3>
+                        <p class="card-text">To provide quality education that empowers students to achieve academic excellence while fostering personal growth and development in a supportive, inclusive environment.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body p-4 text-center">
+                        <div class="icon-container bg-primary bg-opacity-10 rounded-circle p-4 d-inline-block mb-4">
+                            <i class="bi bi-eye display-4 text-primary"></i>
+                        </div>
+                        <h3 class="card-title fw-bold">Our Vision</h3>
+                        <p class="card-text">To be the leading educational institution that transforms students into confident, knowledgeable, and responsible individuals ready to face future challenges.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Special Features Section -->
+<section id="special-features" class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center mb-5">
+                <span class="text-primary fw-semibold">WHY CHOOSE US</span>
+                <h2 class="fw-bold display-5">Our Special Features</h2>
+                <p class="lead">What makes us different from others</p>
+                <div class="title-underline bg-primary mx-auto"></div>
+            </div>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-4">
+                <div class="feature-card p-4 bg-white rounded shadow-sm h-100">
+                    <div class="feature-icon mb-3 text-primary">
+                        <i class="bi bi-trophy display-4"></i>
+                    </div>
+                    <h5 class="fw-bold">Weekly GK Quiz Competitions</h5>
+                    <p>Encouraging curiosity, knowledge enhancement, and healthy competition among students.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="feature-card p-4 bg-white rounded shadow-sm h-100">
+                    <div class="feature-icon mb-3 text-primary">
+                        <i class="bi bi-people display-4"></i>
+                    </div>
+                    <h5 class="fw-bold">Extracurricular Activities</h5>
+                    <p>Including a dedicated Football Club and other engaging programs to promote physical fitness and teamwork.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="feature-card p-4 bg-white rounded shadow-sm h-100">
+                    <div class="feature-icon mb-3 text-primary">
+                        <i class="bi bi-chat-heart display-4"></i>
+                    </div>
+                    <h5 class="fw-bold">Student Counselling</h5>
+                    <p>Providing guidance and support to help students overcome challenges and stay motivated.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="feature-card p-4 bg-white rounded shadow-sm h-100">
+                    <div class="feature-icon mb-3 text-primary">
+                        <i class="bi bi-award display-4"></i>
+                    </div>
+                    <h5 class="fw-bold">Recognition for Excellence</h5>
+                    <p>Special gifts and awards for academic toppers to celebrate their achievements.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="feature-card p-4 bg-white rounded shadow-sm h-100">
+                    <div class="feature-icon mb-3 text-primary">
+                        <i class="bi bi-mic display-4"></i>
+                    </div>
+                    <h5 class="fw-bold">Zero Hour Talent Show</h5>
+                    <p>A dedicated platform for students to showcase their skills and creativity.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="feature-card p-4 bg-white rounded shadow-sm h-100">
+                    <div class="feature-icon mb-3 text-primary">
+                        <i class="bi bi-person-badge display-4"></i>
+                    </div>
+                    <h5 class="fw-bold">Dedicated Faculty</h5>
+                    <p>Experienced and passionate teachers committed to student success.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4 mx-auto">
+                <div class="feature-card p-4 bg-white rounded shadow-sm h-100">
+                    <div class="feature-icon mb-3 text-primary">
+                        <i class="bi bi-clipboard-data display-4"></i>
+                    </div>
+                    <h5 class="fw-bold">Monthly Exams & Parent Meetings</h5>
+                    <p>Regular assessments and open communication to ensure continuous progress and improvement.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action Section -->
+<section class="py-5 bg-primary text-white">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8 mb-4 mb-lg-0">
+                <h2 class="fw-bold display-6">Ready to Empower Your Child's Future?</h2>
+                <p class="lead mb-0">Join Wisdom Learning Academy today and give your child the advantage they deserve.</p>
+            </div>
+            <div class="col-lg-4 text-lg-end">
+                <a href="{% url 'contact' %}" class="btn btn-light btn-lg px-4">Enroll Now</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .about-hero {
+        background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('{% static "images/about-banner.jpg" %}') center/cover no-repeat;
+        min-height: 60vh;
+    }
+    
+    .overlay {
+        background: linear-gradient(135deg, rgba(13,110,253,0.8) 0%, rgba(13,110,253,0.4) 100%);
+    }
+    
+    .title-underline {
+        height: 3px;
+        width: 80px;
+        margin: 15px 0;
+    }
+    
+    .feature-card {
+        transition: all 0.3s ease;
+        border-top: 4px solid transparent;
+    }
+    
+    .feature-card:hover {
+        transform: translateY(-10px);
+        border-top: 4px solid #0d6efd;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1) !important;
+    }
+    
+    .stat-card {
+        transition: transform 0.3s ease;
+    }
+    
+    .stat-card:hover {
+        transform: scale(1.05);
+    }
+    
+    .icon-container {
+        transition: all 0.3s ease;
+    }
+    
+    .icon-container:hover {
+        background: #0d6efd !important;
+    }
+    
+    .icon-container:hover i {
+        color: white !important;
+    }
+    
+    @media (max-width: 768px) {
+        .about-hero .display-4 {
+            font-size: 2.2rem;
+        }
+        
+        .display-5 {
+            font-size: 2rem;
+        }
+        
+        .display-6 {
+            font-size: 1.8rem;
+        }
+    }
+</style>
+
+<!-- Bootstrap Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+
+{% endblock %}

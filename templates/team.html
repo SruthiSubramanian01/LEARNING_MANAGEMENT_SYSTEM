@@ -1,0 +1,231 @@
+{% extends 'base.html'%}
+{% load static %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="team-hero bg-primary text-white py-5">
+    <div class="container py-4">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h1 class="display-4 fw-bold">OUR TEAM</h1>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb justify-content-center">
+                        <li class="breadcrumb-item"><a href="{% url 'home' %}" class="text-white">Home</a></li>
+                        <li class="breadcrumb-item active text-white" aria-current="page">Our Team</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Team Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center mb-5">
+                <h2 class="fw-bold">MEET OUR EXPERT FACULTY</h2>
+                <p class="lead">Dedicated professionals committed to student success</p>
+            </div>
+        </div>
+        <div class="row g-4">
+            <!-- Malayalam Faculty -->
+            <div class="col-md-6 col-lg-4">
+                <div class="team-card text-center p-4 bg-white rounded shadow-sm h-100">
+                    <div class="team-img mx-auto mb-4">
+                        <img src="{% static 'images/profile-default.gif' %}" alt="Ms. ANISHA P" class="img-fluid rounded-circle">
+                    </div>
+                    <h4 class="mb-1">Ms. ANISHA P</h4>
+                    <p class="text-muted mb-2"><i class="bi bi-mortarboard"></i> MA Malayalam</p>
+                    <h6 class="text-primary mb-3">Malayalam Faculty</h6>
+                    <p class="mb-3"><i class="bi bi-telephone"></i> Contact: 9447674597</p>
+                    <div class="social-links">
+                        <a href="#" class="text-primary me-2"><i class="bi bi-facebook"></i></a>
+                        <a href="#" class="text-primary me-2"><i class="bi bi-whatsapp"></i></a>
+                        <a href="#" class="text-primary"><i class="bi bi-envelope"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- English Faculty -->
+            <div class="col-md-6 col-lg-4">
+                <div class="team-card text-center p-4 bg-white rounded shadow-sm h-100">
+                    <div class="team-img mx-auto mb-4">
+                        <img src="{% static 'images/profile-default.gif' %}" alt="Mr. ALFRED M" class="img-fluid rounded-circle">
+                    </div>
+                    <h4 class="mb-1">Mr. ALFRED M</h4>
+                    <p class="text-muted mb-2"><i class="bi bi-mortarboard"></i> MA English</p>
+                    <h6 class="text-primary mb-3">English Faculty</h6>
+                    <p class="mb-3"><i class="bi bi-telephone"></i> Contact: 9995945978</p>
+                    <div class="social-links">
+                        <a href="#" class="text-primary me-2"><i class="bi bi-facebook"></i></a>
+                        <a href="#" class="text-primary me-2"><i class="bi bi-whatsapp"></i></a>
+                        <a href="#" class="text-primary"><i class="bi bi-envelope"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hindi Faculty -->
+            <div class="col-md-6 col-lg-4">
+                <div class="team-card text-center p-4 bg-white rounded shadow-sm h-100">
+                    <div class="team-img mx-auto mb-4">
+                        <img src="{% static 'images/profile-default.gif' %}" alt="Ms. RITHU S" class="img-fluid rounded-circle">
+                    </div>
+                    <h4 class="mb-1">Ms. RITHU S</h4>
+                    <p class="text-muted mb-2"><i class="bi bi-mortarboard"></i> MA Hindi</p>
+                    <h6 class="text-primary mb-3">Hindi Faculty</h6>
+                    <p class="mb-3"><i class="bi bi-telephone"></i> Contact: 9497595968</p>
+                    <div class="social-links">
+                        <a href="#" class="text-primary me-2"><i class="bi bi-facebook"></i></a>
+                        <a href="#" class="text-primary me-2"><i class="bi bi-whatsapp"></i></a>
+                        <a href="#" class="text-primary"><i class="bi bi-envelope"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chemistry Faculty -->
+            <div class="col-md-6 col-lg-4">
+                <div class="team-card text-center p-4 bg-white rounded shadow-sm h-100">
+                    <div class="team-img mx-auto mb-4">
+                        <img src="{% static 'images/profile-default.gif' %}" alt="Mrs. HASEENA B" class="img-fluid rounded-circle">
+                    </div>
+                    <h4 class="mb-1">Mrs. HASEENA B</h4>
+                    <p class="text-muted mb-2"><i class="bi bi-mortarboard"></i> Bsc Chemistry</p>
+                    <h6 class="text-primary mb-3">Chemistry Faculty</h6>
+                    <p class="mb-3"><i class="bi bi-telephone"></i> Contact: 7012259894</p>
+                    <div class="social-links">
+                        <a href="#" class="text-primary me-2"><i class="bi bi-facebook"></i></a>
+                        <a href="#" class="text-primary me-2"><i class="bi bi-whatsapp"></i></a>
+                        <a href="#" class="text-primary"><i class="bi bi-envelope"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Biology Faculty -->
+            <div class="col-md-6 col-lg-4">
+                <div class="team-card text-center p-4 bg-white rounded shadow-sm h-100">
+                    <div class="team-img mx-auto mb-4">
+                        <img src="{% static 'images/profile-default.gif' %}" alt="Mrs. APARNA V" class="img-fluid rounded-circle">
+                    </div>
+                    <h4 class="mb-1">Mrs. APARNA V</h4>
+                    <p class="text-muted mb-2"><i class="bi bi-mortarboard"></i> Msc Zoology, B.Ed</p>
+                    <h6 class="text-primary mb-3">Biology Faculty</h6>
+                    <p class="mb-3"><i class="bi bi-telephone"></i> Contact: 9633345976</p>
+                    <div class="social-links">
+                        <a href="#" class="text-primary me-2"><i class="bi bi-facebook"></i></a>
+                        <a href="#" class="text-primary me-2"><i class="bi bi-whatsapp"></i></a>
+                        <a href="#" class="text-primary"><i class="bi bi-envelope"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Physics Faculty -->
+            <div class="col-md-6 col-lg-4">
+                <div class="team-card text-center p-4 bg-white rounded shadow-sm h-100">
+                    <div class="team-img mx-auto mb-4">
+                        <img src="{% static 'images/profile-default.gif' %}" alt="Mr. RAJESH R" class="img-fluid rounded-circle">
+                    </div>
+                    <h4 class="mb-1">Mr. RAJESH R</h4>
+                    <p class="text-muted mb-2"><i class="bi bi-mortarboard"></i> Bsc Physics, B.Ed</p>
+                    <h6 class="text-primary mb-3">Physics Faculty</h6>
+                    <p class="mb-3"><i class="bi bi-telephone"></i> Contact: 7306080548</p>
+                    <div class="social-links">
+                        <a href="#" class="text-primary me-2"><i class="bi bi-facebook"></i></a>
+                        <a href="#" class="text-primary me-2"><i class="bi bi-whatsapp"></i></a>
+                        <a href="#" class="text-primary"><i class="bi bi-envelope"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Maths Faculty -->
+            <div class="col-md-6 col-lg-4">
+                <div class="team-card text-center p-4 bg-white rounded shadow-sm h-100">
+                    <div class="team-img mx-auto mb-4">
+                        <img src="{% static 'images/profile-default.gif' %}" alt="Mr. DILEEP P" class="img-fluid rounded-circle">
+                    </div>
+                    <h4 class="mb-1">Mr. DILEEP P</h4>
+                    <p class="text-muted mb-2"><i class="bi bi-mortarboard"></i> Bsc Maths, B.Ed</p>
+                    <h6 class="text-primary mb-3">Maths Faculty</h6>
+                    <p class="mb-3"><i class="bi bi-telephone"></i> Contact: 8129098583</p>
+                    <div class="social-links">
+                        <a href="#" class="text-primary me-2"><i class="bi bi-facebook"></i></a>
+                        <a href="#" class="text-primary me-2"><i class="bi bi-whatsapp"></i></a>
+                        <a href="#" class="text-primary"><i class="bi bi-envelope"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Social Faculty -->
+            <div class="col-md-6 col-lg-4">
+                <div class="team-card text-center p-4 bg-white rounded shadow-sm h-100">
+                    <div class="team-img mx-auto mb-4">
+                        <img src="{% static 'images/profile-default.gif' %}" alt="Mr. RENJITH R" class="img-fluid rounded-circle">
+                    </div>
+                    <h4 class="mb-1">Mr. RENJITH R</h4>
+                    <p class="text-muted mb-2"><i class="bi bi-mortarboard"></i> MA History</p>
+                    <h6 class="text-primary mb-3">Social Faculty</h6>
+                    <p class="mb-3"><i class="bi bi-telephone"></i> Contact: 7012472822</p>
+                    <div class="social-links">
+                        <a href="#" class="text-primary me-2"><i class="bi bi-facebook"></i></a>
+                        <a href="#" class="text-primary me-2"><i class="bi bi-whatsapp"></i></a>
+                        <a href="#" class="text-primary"><i class="bi bi-envelope"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Computer Science Faculty -->
+            <div class="col-md-6 col-lg-4 mx-auto">
+                <div class="team-card text-center p-4 bg-white rounded shadow-sm h-100">
+                    <div class="team-img mx-auto mb-4">
+                        <img src="{% static 'images/profile-default.gif' %}" alt="Ms. SRUTHI S" class="img-fluid rounded-circle">
+                    </div>
+                    <h4 class="mb-1">Ms. SRUTHI S</h4>
+                    <p class="text-muted mb-2"><i class="bi bi-mortarboard"></i> Bsc Maths, MCA</p>
+                    <h6 class="text-primary mb-3">Computer Science Faculty</h6>
+                    <p class="mb-3"><i class="bi bi-telephone"></i> Contact: 6238002450</p>
+                    <div class="social-links">
+                        <a href="#" class="text-primary me-2"><i class="bi bi-facebook"></i></a>
+                        <a href="#" class="text-primary me-2"><i class="bi bi-whatsapp"></i></a>
+                        <a href="#" class="text-primary"><i class="bi bi-envelope"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .team-hero {
+        background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('{% static "images/team-banner.jpg" %}') center/cover no-repeat;
+    }
+    
+    .team-img {
+        width: 150px;
+        height: 150px;
+        overflow: hidden;
+    }
+    
+    .team-card {
+        transition: transform 0.3s ease;
+    }
+    
+    .team-card:hover {
+        transform: translateY(-5px);
+    }
+    
+    @media (max-width: 768px) {
+        .team-hero .display-4 {
+            font-size: 2rem;
+        }
+        
+        .team-img {
+            width: 120px;
+            height: 120px;
+        }
+    }
+</style>
+
+<!-- Bootstrap Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+
+{% endblock %}

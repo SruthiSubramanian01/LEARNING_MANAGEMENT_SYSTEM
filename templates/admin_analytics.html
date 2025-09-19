@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="text-center mb-4">📊 System Analytics</h2>
+
+    <!-- Quick Stats -->
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="stat-card text-center bg-primary text-white p-3 rounded">
+                <h5>Total Students</h5>
+                <h3>{{ total_students }}</h3>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card text-center bg-success text-white p-3 rounded">
+                <h5>Total Teachers</h5>
+                <h3>{{ total_teachers }}</h3>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card text-center bg-info text-white p-3 rounded">
+                <h5>Assignments</h5>
+                <h3>{{ total_assignments }}</h3>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card text-center bg-warning text-white p-3 rounded">
+                <h5>Results</h5>
+                <h3>{{ total_results }}</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Class Distribution -->
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header bg-dark text-white">
+                    <h5 class="mb-0">👥 Class Distribution</h5>
+                </div>
+                <div class="card-body">
+                    {% if class_distribution %}
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Class</th>
+                                    <th>Students</th>
+                                    <th>Percentage</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for class in class_distribution %}
+                                <tr>
+                                    <td>Class {{ class.student_class }}</td>
+                                    <td>{{ class.count }}</td>
+                                    <td>{{ class.count|floatformat:2 }}%</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% else %}
+                    <p class="text-muted">No data available.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Attendance -->
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header bg-dark text-white">
+                    <h5 class="mb-0">✅ Recent Attendance</h5>
+                </div>
+                <div class="card-body">
+                    {% if attendance_data %}
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Total</th>
+                                    <th>Present</th>
+                                    <th>Percentage</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for data in attendance_data %}
+                                <tr>
+                                    <td>{{ data.date|date:"M d, Y" }}</td>
+                                    <td>{{ data.total }}</td>
+                                    <td>{{ data.present }}</td>
+                                    <td>
+                                        {% widthratio data.present data.total 100 %}%
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% else %}
+                    <p class="text-muted">No attendance data available.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

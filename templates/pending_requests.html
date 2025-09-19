@@ -1,0 +1,247 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<style>
+    .requests-container {
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        min-height: 100vh;
+        padding: 30px 0;
+    }
+    .requests-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 25px;
+        border-radius: 15px 15px 0 0;
+        margin-bottom: 0;
+        text-align: center;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+    .requests-card {
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        margin-bottom: 30px;
+    }
+    .table-container {
+        padding: 20px;
+    }
+    .user-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+    }
+    .user-table th {
+        background: linear-gradient(135deg, #4b6cb7 0%, #182848 100%);
+        color: white;
+        padding: 15px;
+        text-align: left;
+        font-weight: 600;
+        position: sticky;
+        top: 0;
+    }
+    .user-table td {
+        padding: 15px;
+        border-bottom: 1px solid #f1f1f1;
+        vertical-align: middle;
+    }
+    .user-table tr:last-child td {
+        border-bottom: none;
+    }
+    .user-table tr:hover {
+        background-color: #f8f9fa;
+        transform: translateY(-1px);
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        transition: all 0.2s ease;
+    }
+    .badge-teacher {
+        background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+        color: #d35400;
+        padding: 5px 10px;
+        border-radius: 20px;
+        font-weight: 600;
+    }
+    .badge-student {
+        background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);
+        color: #2980b9;
+        padding: 5px 10px;
+        border-radius: 20px;
+        font-weight: 600;
+    }
+    .btn-approve {
+        background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+        color: white;
+        border: none;
+        padding: 8px 15px;
+        border-radius: 8px;
+        font-weight: 600;
+        transition: all 0.3s;
+    }
+    .btn-approve:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(46, 204, 113, 0.3);
+    }
+    .btn-reject {
+        background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+        color: white;
+        border: none;
+        padding: 8px 15px;
+        border-radius: 8px;
+        font-weight: 600;
+        transition: all 0.3s;
+    }
+    .btn-reject:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(231, 76, 60, 0.3);
+    }
+    .no-requests {
+        text-align: center;
+        padding: 40px;
+        color: #7f8c8d;
+    }
+    .no-requests i {
+        font-size: 4rem;
+        margin-bottom: 20px;
+        color: #2ecc71;
+    }
+    .user-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: bold;
+        margin-right: 10px;
+    }
+    .user-info {
+        display: flex;
+        align-items: center;
+    }
+    .action-buttons {
+        display: flex;
+        gap: 10px;
+    }
+    .detail-info {
+        font-size: 0.9rem;
+        color: #7f8c8d;
+    }
+    @media (max-width: 768px) {
+        .user-table {
+            display: block;
+            overflow-x: auto;
+        }
+        .action-buttons {
+            flex-direction: column;
+        }
+    }
+</style>
+
+<div class="requests-container">
+    <div class="container">
+        <div class="requests-card">
+            <div class="requests-header">
+                <h2><i class="fas fa-user-clock me-2"></i> Pending Registration Requests</h2>
+                <p class="mb-0">Approve or reject new user registrations</p>
+            </div>
+            
+            <div class="table-container">
+                {% if pending_users %}
+                <div class="table-responsive">
+                    <table class="user-table">
+                        <thead>
+                            <tr>
+                                <th>User</th>
+                                <th>Contact Info</th>
+                                <th>Role</th>
+                                <th>Details</th>
+                                <th>Registration Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for user in pending_users %}
+                            <tr>
+                                <td>
+                                    <div class="user-info">
+                                        <div class="user-avatar">
+                                            {{ user.first_name|first }}{{ user.last_name|first }}
+                                        </div>
+                                        <div>
+                                            <strong>{{ user.username }}</strong><br>
+                                            <span>{{ user.first_name }} {{ user.last_name }}</span>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>{{ user.email }}</td>
+                                <td>
+                                    <span class="{% if user.role == 'teacher' %}badge-teacher{% else %}badge-student{% endif %}">
+                                        {{ user.role|title }}
+                                    </span>
+                                </td>
+                                <td>
+                                    {% if user.role == 'student' %}
+                                        <div class="detail-info">
+                                            <i class="fas fa-graduation-cap me-1"></i> Class: {{ user.student_class }}
+                                        </div>
+                                    {% else %}
+                                        <div class="detail-info">
+                                            <i class="fas fa-book me-1"></i> Subject: {{ user.subject }}<br>
+                                            <i class="fas fa-certificate me-1"></i> {{ user.qualification }}
+                                        </div>
+                                    {% endif %}
+                                </td>
+                                <td>{{ user.date_joined|date:"M d, Y" }}</td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <a href="{% url 'approve_user' user.id %}" class="btn-approve">
+                                            <i class="fas fa-check me-1"></i> Approve
+                                        </a>
+                                        <a href="{% url 'reject_user' user.id %}" class="btn-reject">
+                                            <i class="fas fa-times me-1"></i> Reject
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="no-requests">
+                    <i class="fas fa-check-circle"></i>
+                    <h4>No Pending Requests</h4>
+                    <p>All registration requests have been processed.</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Add confirmation for reject action
+    document.querySelectorAll('.btn-reject').forEach(button => {
+        button.addEventListener('click', function(e) {
+            if (!confirm('Are you sure you want to reject this registration request?')) {
+                e.preventDefault();
+            }
+        });
+    });
+    
+    // Add animation to table rows
+    document.querySelectorAll('.user-table tr').forEach((row, index) => {
+        row.style.opacity = '0';
+        row.style.transform = 'translateY(20px)';
+        
+        setTimeout(() => {
+            row.style.transition = 'all 0.5s ease';
+            row.style.opacity = '1';
+            row.style.transform = 'translateY(0)';
+        }, index * 100);
+    });
+</script>
+{% endblock %}

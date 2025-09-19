@@ -1,0 +1,192 @@
+.dashboard-container {
+    display: flex;
+    min-height: 90vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 280px;
+    background: linear-gradient(135deg, #2c3e50 0%, #1a2530 100%);
+    color: #ecf0f1;
+    padding: 25px 20px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    height: 100vh;
+    overflow-y: auto;
+    z-index: 100;
+}
+
+.admin-profile {
+    margin-bottom: 25px;
+}
+
+.admin-img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 4px solid #1abc9c;
+    object-fit: cover;
+}
+
+.welcome-text {
+    color: #bdc3c7;
+    font-size: 0.9rem;
+}
+
+/* Sidebar Menu */
+.sidebar-menu {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+}
+
+.sidebar-menu li {
+    margin: 12px 0;
+    padding: 5px 0;
+}
+
+.sidebar-menu li a {
+    color: #ecf0f1;
+    text-decoration: none;
+    font-size: 16px;
+    transition: all 0.3s;
+    padding: 10px 15px;
+    border-radius: 8px;
+    display: block;
+}
+
+.sidebar-menu li a:hover {
+    background: #1abc9c;
+    color: white;
+    transform: translateX(5px);
+}
+
+.sidebar-menu li a i {
+    margin-right: 10px;
+    font-size: 18px;
+}
+
+/* Logout button */
+.logout-btn {
+    margin-top: 30px;
+    padding: 0 15px;
+}
+
+/* Main Content */
+.main-content {
+    margin-left: 280px;
+    padding: 30px;
+    background: #f8f9fa;
+    width: calc(100% - 280px);
+    min-height: 100vh;
+}
+
+.dashboard-title {
+    color: #2c3e50;
+    font-weight: 600;
+    margin-bottom: 30px !important;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #eaeaea;
+}
+
+/* Stats Cards */
+.stats-card {
+    transition: all 0.3s ease;
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    height: 100%;
+}
+
+.stats-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+}
+
+.teacher-card {
+    border-top: 4px solid #3498db;
+}
+
+.student-card {
+    border-top: 4px solid #2ecc71;
+}
+
+.pending-card {
+    border-top: 4px solid #f39c12;
+}
+
+.function-card {
+    border-top: 4px solid #9b59b6;
+}
+
+.stats-icon {
+    font-size: 2.8rem;
+    margin-bottom: 15px;
+    display: inline-block;
+    padding: 15px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.stats-card h3 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin: 10px 0;
+    color: #2c3e50;
+}
+
+.stats-card h5 {
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
+
+.stats-card p {
+    color: #7f8c8d;
+    margin-bottom: 20px;
+}
+
+.stats-card .btn {
+    border-radius: 20px;
+    padding: 6px 20px;
+    font-weight: 500;
+    transition: all 0.3s;
+}
+
+.stats-card .btn:hover {
+    transform: scale(1.05);
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .sidebar {
+        width: 230px;
+    }
+    
+    .main-content {
+        margin-left: 230px;
+        width: calc(100% - 230px);
+    }
+}
+
+@media (max-width: 768px) {
+    .dashboard-container {
+        flex-direction: column;
+    }
+    
+    .sidebar {
+        width: 100%;
+        position: relative;
+        height: auto;
+    }
+    
+    .main-content {
+        margin-left: 0;
+        width: 100%;
+    }
+    
+    .stats-card {
+        margin-bottom: 20px;
+    }
+}

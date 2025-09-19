@@ -1,0 +1,15 @@
+Account Application Status - Wisdom Learning Academy
+
+Dear {{ user.first_name }} {{ user.last_name }},
+
+Thank you for your interest in joining Wisdom Learning Academy as a {{ role }}.
+
+After careful review, we regret to inform you that your application has not been approved at this time.
+
+If you believe this is an error or would like more information, please contact our administration office.
+
+We appreciate your understanding and encourage you to explore other opportunities with us in the future.
+
+This is an automated message. Please do not reply to this email.
+
+© 2025 Wisdom Learning Academy. All rights reserved.

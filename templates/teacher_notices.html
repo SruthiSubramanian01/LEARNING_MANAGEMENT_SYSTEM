@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4 min-vh-100">
+    <div class="card shadow">
+        <div class="card-header bg-info text-white">
+            <h4 class="mb-0">📢 Notices from Administration</h4>
+        </div>
+        <div class="card-body">
+            {% if notices %}
+            <div class="notice-list">
+                {% for notice in notices %}
+                <div class="notice-item card mb-3 {% if notice.is_important %}border-warning{% endif %}">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <h5 class="card-title {% if notice.is_important %}text-warning{% endif %}">
+                                {{ notice.title }}
+                                {% if notice.is_important %}
+                                <span class="badge bg-warning ms-2">Important</span>
+                                {% endif %}
+                            </h5>
+                            <small class="text-muted">{{ notice.created_at|date:"M d, Y" }}</small>
+                        </div>
+                        <p class="card-text">{{ notice.content|truncatewords:50 }}</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <small class="text-muted">By: {{ notice.created_by.get_full_name }}</small>
+                            <a href="{% url 'view_notice_detail' notice.id %}" class="btn btn-sm btn-outline-primary">
+                                Read Full Notice
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="text-center py-4">
+                <i class="fas fa-sticky-note fa-3x text-muted mb-3"></i>
+                <p class="text-muted">No notices available at the moment.</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="footer mt-auto py-3 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <p class="text-muted mb-0">© 2023 School Management System. All rights reserved.</p>
+            </div>
+            <div class="col-md-6 text-md-end">
+                <a href="#" class="text-muted me-3">Privacy Policy</a>
+                <a href="#" class="text-muted">Terms of Service</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- Add FontAwesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+<style>
+    /* Custom CSS for sticky footer */
+    body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
+    
+    .footer {
+        margin-top: auto;
+    }
+    
+    /* Ensure content container takes available space */
+    .min-vh-100 {
+        min-height: 70vh;
+    }
+    
+    /* Original styles */
+    .notice-item {
+        transition: transform 0.2s;
+        border-left: 4px solid transparent;
+    }
+    .notice-item:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    .border-warning {
+        border-left: 4px solid #ffc107 !important;
+    }
+    
+    /* Additional styling for better appearance */
+    .bg-info {
+        background: linear-gradient(135deg, #0dcaf0 0%, #0aa2c0 100%) !important;
+    }
+    
+    .notice-item.card {
+        border-radius: 8px;
+        overflow: hidden;
+    }
+    
+    .btn-outline-primary {
+        border-width: 2px;
+        font-weight: 500;
+    }
+</style>
+{% endblock %}

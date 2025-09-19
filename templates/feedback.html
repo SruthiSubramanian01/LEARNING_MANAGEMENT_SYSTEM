@@ -1,0 +1,456 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container my-5">
+    <!-- Page Header -->
+    <div class="text-center mb-5">
+        <h1 class="display-4 fw-bold text-primary mb-3">Share Your Feedback</h1>
+        <p class="lead text-muted">Your opinion helps us improve and provide better service to our community</p>
+        <div class="title-underline bg-primary mx-auto mb-4"></div>
+    </div>
+    
+    <div class="row">
+        <!-- Feedback Form Section -->
+        <div class="col-lg-7 mb-5">
+            <div class="card shadow-lg border-0 rounded-3">
+                <div class="card-header bg-gradient-primary text-white py-4 rounded-top-3">
+                    <h3 class="mb-0 text-center"><i class="bi bi-chat-square-text me-2"></i>Submit Your Feedback</h3>
+                </div>
+                <div class="card-body p-4">
+                    <form id="feedbackForm" method="POST" action="{% url 'submit_feedback' %}">
+                        {% csrf_token %}
+                        <div class="mb-4">
+                            <label for="userType" class="form-label fw-semibold">You are submitting as:</label>
+                            <select class="form-select form-select-lg" id="userType" name="user_type" required>
+                                <option value="" selected disabled>Select your role</option>
+                                <option value="student">Student</option>
+                                <option value="teacher">Teacher</option>
+                                <option value="parent">Parent</option>
+                                <option value="public">Public</option>
+                            </select>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-4">
+                                <label for="name" class="form-label fw-semibold">Your Name (optional):</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-person"></i></span>
+                                    <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name">
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6 mb-4">
+                                <label for="email" class="form-label fw-semibold">Email (optional):</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                                    <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label for="feedbackText" class="form-label fw-semibold">Your Feedback:</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-chat-left-text"></i></span>
+                                <textarea class="form-control" id="feedbackText" name="feedback" rows="5" placeholder="Please share your thoughts, suggestions, or experience with us..." required></textarea>
+                            </div>
+                            <div class="form-text">Your feedback helps us improve our services</div>
+                        </div>
+                        
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-lg py-3">
+                                <i class="bi bi-send me-2"></i>Submit Feedback
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Reviews Display Section -->
+        <div class="col-lg-5">
+            <div class="card shadow-lg border-0 rounded-3 h-100">
+                <div class="card-header bg-gradient-info text-white py-4 rounded-top-3 d-flex justify-content-between align-items-center">
+                    <h3 class="mb-0"><i class="bi bi-star me-2"></i>Community Reviews</h3>
+                    <span class="badge bg-light text-dark fs-6 py-2 px-3" id="reviewCount">0 reviews</span>
+                </div>
+                <div class="card-body p-4">
+                    <div id="reviewsContainer" class="reviews-container">
+                        <!-- Reviews will be loaded here via JavaScript -->
+                        <div class="text-center py-5">
+                            <div class="spinner-border text-primary mb-3" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <p class="text-muted">Loading reviews...</p>
+                        </div>
+                    </div>
+                    <p class="text-muted mt-3 text-center"><i class="bi bi-arrows-move me-2"></i>Drag reviews to rearrange</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Success Modal -->
+<div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow">
+            <div class="modal-header bg-success text-white">
+                <h5 class="modal-title" id="successModalLabel"><i class="bi bi-check-circle-fill me-2"></i>Success</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-4 text-center">
+                <i class="bi bi-check2-circle text-success display-4 mb-3"></i>
+                <h4 class="mb-3">Thank You for Your Feedback!</h4>
+                <p class="mb-0">Your review has been submitted successfully and will help us improve our services.</p>
+            </div>
+            <div class="modal-footer border-0">
+                <button type="button" class="btn btn-primary w-100 py-2" data-bs-dismiss="modal">Continue</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .bg-gradient-primary {
+        background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%) !important;
+    }
+    
+    .bg-gradient-info {
+        background: linear-gradient(135deg, #0dcaf0 0%, #0aa2c0 100%) !important;
+    }
+    
+    .title-underline {
+        height: 4px;
+        width: 100px;
+        margin: 15px 0;
+    }
+    
+    .reviews-container {
+        max-height: 500px;
+        overflow-y: auto;
+        padding-right: 10px;
+    }
+    
+    .review-card {
+        transition: all 0.3s ease;
+        cursor: grab;
+        background-color: #f8f9fa;
+        border-radius: 12px;
+        margin-bottom: 20px;
+        padding: 20px;
+        border: 1px solid #e9ecef;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    }
+    
+    .review-card:hover {
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        transform: translateY(-2px);
+    }
+    
+    .review-card:active {
+        cursor: grabbing;
+        box-shadow: 0 0 15px rgba(13, 110, 253, 0.2);
+    }
+    
+    .review-card.dragging {
+        opacity: 0.6;
+        background-color: #e9ecef;
+    }
+    
+    /* Custom scrollbar for reviews container */
+    .reviews-container::-webkit-scrollbar {
+        width: 8px;
+    }
+    
+    .reviews-container::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 10px;
+    }
+    
+    .reviews-container::-webkit-scrollbar-thumb {
+        background: #c1c1c1;
+        border-radius: 10px;
+    }
+    
+    .reviews-container::-webkit-scrollbar-thumb:hover {
+        background: #a8a8a8;
+    }
+    
+    .user-badge {
+        font-size: 0.75rem;
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-weight: 600;
+    }
+    
+    .input-group-text {
+        background-color: #f8f9fa;
+        border-right: none;
+    }
+    
+    .form-control:focus + .input-group-text {
+        border-color: #86b7fe;
+        background-color: #f8f9fa;
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 992px) {
+        .display-4 {
+            font-size: 2.5rem;
+        }
+    }
+    
+    @media (max-width: 768px) {
+        .display-4 {
+            font-size: 2rem;
+        }
+        
+        .card-header h3 {
+            font-size: 1.5rem;
+        }
+        
+        .reviews-container {
+            max-height: 400px;
+        }
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const reviewsContainer = document.getElementById('reviewsContainer');
+        const reviewCount = document.getElementById('reviewCount');
+        const feedbackForm = document.getElementById('feedbackForm');
+        const successModal = new bootstrap.Modal(document.getElementById('successModal'));
+        let draggedItem = null;
+        
+        // Load reviews from server
+        function loadReviews() {
+            // Show loading state
+            reviewsContainer.innerHTML = `
+                <div class="text-center py-4">
+                    <div class="spinner-border text-primary mb-3" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <p class="text-muted">Loading reviews...</p>
+                </div>
+            `;
+            
+            fetch('{% url "get_feedback" %}')
+                .then(response => response.json())
+                .then(data => {
+                    reviewsContainer.innerHTML = '';
+                    reviewCount.textContent = data.length + ' review' + (data.length !== 1 ? 's' : '');
+                    
+                    if (data.length === 0) {
+                        reviewsContainer.innerHTML = `
+                            <div class="text-center py-5">
+                                <i class="bi bi-chat-square-text display-4 text-muted mb-3"></i>
+                                <h5 class="text-muted">No reviews yet</h5>
+                                <p class="text-muted">Be the first to share your feedback!</p>
+                            </div>
+                        `;
+                        return;
+                    }
+                    
+                    data.forEach(review => {
+                        const reviewCard = document.createElement('div');
+                        reviewCard.className = 'review-card draggable';
+                        reviewCard.draggable = true;
+                        reviewCard.dataset.id = review.id;
+                        
+                        // Determine badge color based on user type
+                        let badgeClass = 'bg-secondary';
+                        let iconClass = 'bi-person';
+                        if (review.user_type === 'student') {
+                            badgeClass = 'bg-success';
+                            iconClass = 'bi-mortarboard';
+                        } else if (review.user_type === 'teacher') {
+                            badgeClass = 'bg-primary';
+                            iconClass = 'bi-person-badge';
+                        } else if (review.user_type === 'parent') {
+                            badgeClass = 'bg-warning';
+                            iconClass = 'bi-people';
+                        }
+                        
+                        // Format date
+                        const date = new Date(review.created_at);
+                        const formattedDate = date.toLocaleDateString('en-US', { 
+                            year: 'numeric', 
+                            month: 'short', 
+                            day: 'numeric' 
+                        });
+                        
+                        // Capitalize user type
+                        const userType = review.user_type.charAt(0).toUpperCase() + review.user_type.slice(1);
+                        
+                        reviewCard.innerHTML = `
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <span class="user-badge ${badgeClass} text-white">
+                                    <i class="bi ${iconClass} me-1"></i>${userType}
+                                </span>
+                                <small class="text-muted">${formattedDate}</small>
+                            </div>
+                            <p class="mb-3 feedback-content">${review.feedback}</p>
+                            <small class="text-muted">— ${review.name || 'Anonymous'}</small>
+                        `;
+                        
+                        reviewsContainer.appendChild(reviewCard);
+                    });
+                    
+                    // Make reviews draggable
+                    setupDragAndDrop();
+                })
+                .catch(error => {
+                    console.error('Error loading reviews:', error);
+                    reviewsContainer.innerHTML = `
+                        <div class="text-center py-5">
+                            <i class="bi bi-exclamation-triangle display-4 text-danger mb-3"></i>
+                            <h5 class="text-danger">Error loading reviews</h5>
+                            <p class="text-muted">Please try again later</p>
+                        </div>
+                    `;
+                });
+        }
+        
+        // Set up drag and drop functionality
+        function setupDragAndDrop() {
+            document.querySelectorAll('.draggable').forEach(card => {
+                card.addEventListener('dragstart', function(e) {
+                    draggedItem = this;
+                    setTimeout(() => this.classList.add('dragging'), 0);
+                });
+                
+                card.addEventListener('dragend', function() {
+                    this.classList.remove('dragging');
+                    draggedItem = null;
+                });
+                
+                card.addEventListener('dragover', function(e) {
+                    e.preventDefault();
+                });
+                
+                card.addEventListener('dragenter', function(e) {
+                    e.preventDefault();
+                    this.style.backgroundColor = '#e9ecef';
+                });
+                
+                card.addEventListener('dragleave', function() {
+                    this.style.backgroundColor = '#f8f9fa';
+                });
+                
+                card.addEventListener('drop', function(e) {
+                    e.preventDefault();
+                    this.style.backgroundColor = '#f8f9fa';
+                    
+                    if (draggedItem !== this) {
+                        if (draggedItem.nextSibling === this) {
+                            reviewsContainer.insertBefore(this, draggedItem);
+                        } else {
+                            reviewsContainer.insertBefore(draggedItem, this);
+                        }
+                    }
+                });
+            });
+        }
+        
+        // Handle form submission with AJAX
+        feedbackForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Simple validation
+            const userType = document.getElementById('userType');
+            const feedbackText = document.getElementById('feedbackText');
+            
+            if (!userType.value) {
+                showAlert('Please select your role', 'warning');
+                userType.focus();
+                return;
+            }
+            
+            if (!feedbackText.value.trim()) {
+                showAlert('Please provide your feedback', 'warning');
+                feedbackText.focus();
+                return;
+            }
+            
+            // Disable submit button to prevent multiple submissions
+            const submitBtn = this.querySelector('button[type="submit"]');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="bi bi-arrow-repeat spinner"></i> Submitting...';
+            
+            // Submit the form via AJAX
+            const formData = new FormData(this);
+            
+            fetch(this.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    // Show success message
+                    successModal.show();
+                    
+                    // Reset form
+                    feedbackForm.reset();
+                    
+                    // Reload reviews
+                    loadReviews();
+                } else {
+                    showAlert('Error: ' + data.message, 'danger');
+                }
+                
+                // Re-enable submit button
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="bi bi-send me-2"></i>Submit Feedback';
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showAlert('Error submitting feedback. Please try again.', 'danger');
+                
+                // Re-enable submit button
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="bi bi-send me-2"></i>Submit Feedback';
+            });
+        });
+        
+        // Helper function to show alerts
+        function showAlert(message, type) {
+            // Remove any existing alerts
+            const existingAlert = document.querySelector('.alert');
+            if (existingAlert) {
+                existingAlert.remove();
+            }
+            
+            // Create new alert
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert alert-${type} alert-dismissible fade show`;
+            alertDiv.innerHTML = `
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            `;
+            
+            // Insert alert before the form
+            feedbackForm.parentNode.insertBefore(alertDiv, feedbackForm);
+            
+            // Auto dismiss after 5 seconds
+            setTimeout(() => {
+                if (alertDiv.parentNode) {
+                    alertDiv.remove();
+                }
+            }, 5000);
+        }
+        
+        // Initial load of reviews
+        loadReviews();
+    });
+</script>
+
+<!-- Bootstrap Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+{% endblock %}

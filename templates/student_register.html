@@ -1,0 +1,421 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="registration-hero bg-primary text-white py-4">
+    <div class="container py-3">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <h1 class="display-5 fw-bold mb-2">Student Registration</h1>
+                <p class="lead mb-0">Join Wisdom Learning Academy and start your educational journey</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-10 col-lg-8 col-xl-7">
+            <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
+                <div class="card-header bg-gradient-primary text-white text-center py-4">
+                    <h2 class="mb-0 fw-bold"><i class="bi bi-person-plus me-2"></i>Create Student Account</h2>
+                    <p class="mb-0 mt-2 opacity-75">Fill in your details to get started</p>
+                </div>
+                <div class="card-body p-4 p-md-5">
+                    <form method="POST" novalidate id="registrationForm" class="needs-validation">
+                        {% csrf_token %}
+                        
+                        <!-- Display form errors -->
+                        {% if form.errors %}
+                        <div class="alert alert-danger">
+                            <strong>Please correct the following errors:</strong>
+                            <ul class="mb-0 mt-2">
+                            {% for field in form %}
+                                {% for error in field.errors %}
+                                <li>{{ error }}</li>
+                                {% endfor %}
+                            {% endfor %}
+                            {% for error in form.non_field_errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                            </ul>
+                        </div>
+                        {% endif %}
+                        
+                        <!-- Personal Information Section -->
+                        <h5 class="mb-4 mt-2 text-primary border-bottom pb-2"><i class="bi bi-person-circle me-2"></i>Personal Information</h5>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="id_first_name" class="form-label fw-semibold">First Name <span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-person"></i></span>
+                                    <input type="text" class="form-control form-control-lg" id="id_first_name" name="first_name" 
+                                           placeholder="Enter your first name" required>
+                                </div>
+                                <div class="invalid-feedback">
+                                    Please provide your first name.
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="id_last_name" class="form-label fw-semibold">Last Name <span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-person"></i></span>
+                                    <input type="text" class="form-control form-control-lg" id="id_last_name" name="last_name" 
+                                           placeholder="Enter your last name" required>
+                                </div>
+                                <div class="invalid-feedback">
+                                    Please provide your last name.
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Account Information Section -->
+                        <h5 class="mb-4 mt-4 text-primary border-bottom pb-2"><i class="bi bi-shield-lock me-2"></i>Account Information</h5>
+                        
+                        <div class="mb-3">
+                            <label for="id_username" class="form-label fw-semibold">Username <span class="text-danger">*</span></label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-at"></i></span>
+                                <input type="text" class="form-control form-control-lg" id="id_username" name="username" 
+                                       placeholder="Choose a username" required>
+                            </div>
+                            <div class="form-text">Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.</div>
+                            <div class="invalid-feedback">
+                                Please choose a username.
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="id_email" class="form-label fw-semibold">Email Address <span class="text-danger">*</span></label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                                <input type="email" class="form-control form-control-lg" id="id_email" name="email" 
+                                       placeholder="Enter your email" required>
+                            </div>
+                            <div class="invalid-feedback">
+                                Please provide a valid email address.
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="id_student_class" class="form-label fw-semibold">Class <span class="text-danger">*</span></label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-mortarboard"></i></span>
+                                <select class="form-select form-select-lg" id="id_student_class" name="student_class" required>
+                                    <option value="" selected disabled>Select Class</option>
+                                    <option value="1">Class 1</option>
+                                    <option value="2">Class 2</option>
+                                    <option value="3">Class 3</option>
+                                    <option value="4">Class 4</option>
+                                    <option value="5">Class 5</option>
+                                    <option value="6">Class 6</option>
+                                    <option value="7">Class 7</option>
+                                    <option value="8">Class 8</option>
+                                    <option value="9">Class 9</option>
+                                    <option value="10">Class 10</option>
+                                    <option value="11">Class 11</option>
+                                    <option value="12">Class 12</option>
+                                </select>
+                            </div>
+                            <div class="invalid-feedback">
+                                Please select your class.
+                            </div>
+                        </div>
+                        
+                        <!-- Password Section -->
+                        <h5 class="mb-4 mt-4 text-primary border-bottom pb-2"><i class="bi bi-key me-2"></i>Password</h5>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="id_password1" class="form-label fw-semibold">Password <span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                                    <input type="password" class="form-control form-control-lg" id="id_password1" name="password1" 
+                                           placeholder="Create a password" required>
+                                    <button class="btn btn-outline-secondary toggle-password" type="button">
+                                        <i class="bi bi-eye"></i>
+                                    </button>
+                                </div>
+                                <div class="form-text">
+                                    <small>Your password must contain at least 8 characters, can't be too common, and can't be entirely numeric.</small>
+                                </div>
+                                <div class="invalid-feedback">
+                                    Please provide a valid password.
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="id_password2" class="form-label fw-semibold">Confirm Password <span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                                    <input type="password" class="form-control form-control-lg" id="id_password2" name="password2" 
+                                           placeholder="Confirm your password" required>
+                                    <button class="btn btn-outline-secondary toggle-password" type="button">
+                                        <i class="bi bi-eye"></i>
+                                    </button>
+                                </div>
+                                <div class="invalid-feedback">
+                                    Passwords must match.
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Terms and Conditions -->
+                        <div class="mb-4 mt-4">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="terms" required>
+                                <label class="form-check-label" for="terms">
+                                    I agree to the <a href="#" data-bs-toggle="modal" data-bs-target="#termsModal">Terms and Conditions</a> <span class="text-danger">*</span>
+                                </label>
+                                <div class="invalid-feedback">
+                                    You must agree before submitting.
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Buttons -->
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                            <button type="reset" class="btn btn-outline-secondary me-md-2 px-4 py-2" id="clearButton">
+                                <i class="bi bi-x-circle me-1"></i>Clear Form
+                            </button>
+                            <button type="submit" class="btn btn-primary px-4 py-2" id="submitButton">
+                                <i class="bi bi-person-plus me-1"></i>Register Now
+                            </button>
+                        </div>
+                        
+                        <!-- Login Link -->
+                        <div class="text-center mt-4 pt-3 border-top">
+                            <p class="mb-0">Already have an account? <a href="{% url 'login' %}" class="fw-semibold">Login here</a></p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Terms Modal -->
+<div class="modal fade" id="termsModal" tabindex="-1" aria-labelledby="termsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="termsModalLabel">Terms and Conditions</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>By registering with Wisdom Learning Academy, you agree to abide by our policies and code of conduct.</p>
+                <p>Your account will be subject to admin approval before you can access all features.</p>
+                <p>We respect your privacy and will never share your information with third parties without your consent.</p>
+                <p>All students are expected to maintain academic integrity and respect towards faculty and peers.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">I Understand</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+
+<style>
+    .registration-hero {
+        background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('{% static "images/registration-banner.jpg" %}') center/cover no-repeat;
+    }
+    
+    .bg-gradient-primary {
+        background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%) !important;
+    }
+    
+    .form-control, .form-select {
+        border-left: none;
+        padding: 12px 16px;
+        transition: all 0.3s ease;
+    }
+    
+    .input-group-text {
+        background-color: #f8f9fa;
+        border-right: none;
+    }
+    
+    .form-control:focus, .form-select:focus {
+        box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.15);
+        border-color: #86b7fe;
+    }
+    
+    .form-control:focus + .input-group-text {
+        border-color: #86b7fe;
+        background-color: #f8f9fa;
+    }
+    
+    /* Style for invalid fields - only show after validation */
+    .is-invalid {
+        border-color: #dc3545 !important;
+    }
+    
+    .invalid-feedback {
+        display: none;
+    }
+    
+    .is-invalid ~ .invalid-feedback {
+        display: block;
+    }
+    
+    .form-check-input.is-invalid ~ .invalid-feedback {
+        display: block;
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .registration-hero .display-5 {
+            font-size: 1.8rem;
+        }
+        
+        .card-body {
+            padding: 1.5rem;
+        }
+        
+        .d-md-flex {
+            flex-direction: column;
+        }
+        
+        .btn {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        
+        .me-md-2 {
+            margin-right: 0 !important;
+        }
+    }
+</style>
+
+<script>
+    // Custom form validation
+    document.getElementById('registrationForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        
+        let isValid = true;
+        const form = this;
+        
+        // Validate first name
+        const firstName = document.getElementById('id_first_name');
+        if (!firstName.value.trim()) {
+            firstName.classList.add('is-invalid');
+            isValid = false;
+        } else {
+            firstName.classList.remove('is-invalid');
+        }
+        
+        // Validate last name
+        const lastName = document.getElementById('id_last_name');
+        if (!lastName.value.trim()) {
+            lastName.classList.add('is-invalid');
+            isValid = false;
+        } else {
+            lastName.classList.remove('is-invalid');
+        }
+        
+        // Validate username
+        const username = document.getElementById('id_username');
+        if (!username.value.trim()) {
+            username.classList.add('is-invalid');
+            isValid = false;
+        } else {
+            username.classList.remove('is-invalid');
+        }
+        
+        // Validate email
+        const email = document.getElementById('id_email');
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!email.value.trim() || !emailPattern.test(email.value)) {
+            email.classList.add('is-invalid');
+            isValid = false;
+        } else {
+            email.classList.remove('is-invalid');
+        }
+        
+        // Validate class selection
+        const studentClass = document.getElementById('id_student_class');
+        if (!studentClass.value) {
+            studentClass.classList.add('is-invalid');
+            isValid = false;
+        } else {
+            studentClass.classList.remove('is-invalid');
+        }
+        
+        // Validate password
+        const password1 = document.getElementById('id_password1');
+        if (!password1.value || password1.value.length < 8) {
+            password1.classList.add('is-invalid');
+            isValid = false;
+        } else {
+            password1.classList.remove('is-invalid');
+        }
+        
+        // Validate password confirmation
+        const password2 = document.getElementById('id_password2');
+        if (!password2.value || password1.value !== password2.value) {
+            password2.classList.add('is-invalid');
+            isValid = false;
+        } else {
+            password2.classList.remove('is-invalid');
+        }
+        
+        // Validate terms agreement
+        const terms = document.getElementById('terms');
+        if (!terms.checked) {
+            terms.classList.add('is-invalid');
+            isValid = false;
+        } else {
+            terms.classList.remove('is-invalid');
+        }
+        
+        // If form is valid, submit it
+        if (isValid) {
+            form.submit();
+        }
+    });
+    
+    // Toggle password visibility
+    document.querySelectorAll('.toggle-password').forEach(button => {
+        button.addEventListener('click', function() {
+            const input = this.parentElement.querySelector('input');
+            const icon = this.querySelector('i');
+            
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.remove('bi-eye');
+                icon.classList.add('bi-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.remove('bi-eye-slash');
+                icon.classList.add('bi-eye');
+            }
+        });
+    });
+    
+    // Clear form function
+    document.getElementById('clearButton').addEventListener('click', function() {
+        const form = document.getElementById('registrationForm');
+        form.reset();
+        
+        // Remove all validation styles
+        document.querySelectorAll('.is-invalid').forEach(el => {
+            el.classList.remove('is-invalid');
+        });
+        
+        // Reset the select to the default option
+        document.getElementById('id_student_class').selectedIndex = 0;
+    });
+    
+    // Add event listeners to remove validation when user starts typing
+    document.querySelectorAll('input, select').forEach(input => {
+        input.addEventListener('input', function() {
+            this.classList.remove('is-invalid');
+        });
+    });
+</script>
+{% endblock %}

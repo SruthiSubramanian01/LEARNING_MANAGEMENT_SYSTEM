@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4 min-vh-100">
+    <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">📋 Career Applications</h4>
+        </div>
+        <div class="card-body">
+            {% if applications %}
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Name</th>
+                            <th>Age</th>
+                            <th>Place</th>
+                            <th>Qualification</th>
+                            <th>Contact</th>
+                            <th>Applied Date</th>
+                            <th>Resume</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for application in applications %}
+                        <tr>
+                            <td><strong>{{ application.name }}</strong></td>
+                            <td>{{ application.age }}</td>
+                            <td>{{ application.place }}</td>
+                            <td>{{ application.get_qualification_display }}</td>
+                            <td>{{ application.contact }}</td>
+                            <td>{{ application.applied_at|date:"M d, Y" }}</td>
+                            <td>
+                                <a href="{{ application.resume.url }}" target="_blank" class="btn btn-sm btn-primary">
+                                    📄 View Resume
+                                </a>
+                            </td>
+                            <td>
+                                <div class="btn-group">
+                                    <!-- Alternative: Link to delete confirmation page -->
+                                    <a href="{% url 'delete_application' application.id %}" class="btn btn-sm btn-outline-danger ms-1">
+                                        Delete
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="text-center py-4">
+                <p class="text-muted">No career applications have been submitted yet.</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Custom styles for footer and responsive design */
+    body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
+    
+    .container.min-vh-100 {
+        flex: 1 0 auto;
+    }
+    
+    /* Responsive table adjustments */
+    @media (max-width: 768px) {
+        .table-responsive {
+            font-size: 0.875rem;
+        }
+        
+        .btn-group {
+            flex-direction: column;
+        }
+        
+        .btn-sm {
+            padding: 0.25rem 0.5rem;
+            font-size: 0.75rem;
+        }
+    }
+    
+    @media (max-width: 576px) {
+        .card-header h4 {
+            font-size: 1.25rem;
+        }
+        
+        .table th, 
+        .table td {
+            padding: 0.5rem;
+        }
+    }
+</style>
+{% endblock %}

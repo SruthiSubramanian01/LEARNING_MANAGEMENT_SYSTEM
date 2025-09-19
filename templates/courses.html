@@ -1,0 +1,177 @@
+{% extends 'base.html'%}
+{% load static %}
+
+{% block content %}
+<section class="courses-hero bg-primary text-white py-5">
+    <div class="container py-4">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h1 class="display-4 fw-bold">OUR CLASSES</h1>
+                <p class="lead">Home - CLASSES</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="courses-content py-5">
+    <div class="container">
+        <div class="row g-4">
+            <!-- Class 8th-10th -->
+            <div class="col-lg-4 col-md-6">
+                <div class="card h-100 shadow-sm course-card">
+                    <div class="card-header bg-light">
+                        <h3 class="card-title text-center mb-0 py-3">Classes 8th-10th</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="course-detail">
+                            <h5 class="text-primary"><i class="bi bi-clock"></i> Class Timing</h5>
+                            <p>Morning: 8:00 AM to 9:30 AM<br>Evening: 4:15 PM to 6:00 PM</p>
+                        </div>
+                        <hr>
+                        <div class="course-detail">
+                            <h5 class="text-primary"><i class="bi bi-credit-card"></i> Admission Fees</h5>
+                            <p>8th Std: ₹700/-<br>9th Std: ₹800/-<br>10th Std: ₹1000/-</p>
+                        </div>
+                        <hr>
+                        <div class="course-detail">
+                            <h5 class="text-primary"><i class="bi bi-cash"></i> Monthly Fees</h5>
+                            <p>8th Std: ₹350/-<br>9th Std: ₹400/-<br>10th Std: ₹500/-</p>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-transparent text-center">
+                        <button class="btn btn-primary">Enroll Now</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- +1 and +2 Classes -->
+            <div class="col-lg-4 col-md-6">
+                <div class="card h-100 shadow-sm course-card">
+                    <div class="card-header bg-light">
+                        <h3 class="card-title text-center mb-0 py-3">+1 and +2 Classes</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="course-detail">
+                            <h5 class="text-primary"><i class="bi bi-clock"></i> Class Timing</h5>
+                            <p>Morning: 7:00 AM to 8:00 AM<br>Evening: 6:00 PM to 7:00 PM</p>
+                        </div>
+                        <hr>
+                        <div class="course-detail">
+                            <h5 class="text-primary"><i class="bi bi-credit-card"></i> Admission Fees</h5>
+                            <p>Plus One: ₹1500/-<br>Plus Two: ₹1600/-</p>
+                        </div>
+                        <hr>
+                        <div class="course-detail">
+                            <h5 class="text-primary"><i class="bi bi-cash"></i> Monthly Fees</h5>
+                            <p>Plus One: ₹700/-<br>Plus Two: ₹800/-</p>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-transparent text-center">
+                        <button class="btn btn-primary">Enroll Now</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Supply Classes -->
+            <div class="col-lg-4 col-md-6 mx-md-auto">
+                <div class="card h-100 shadow-sm course-card">
+                    <div class="card-header bg-light">
+                        <h3 class="card-title text-center mb-0 py-3">Supply Classes</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="course-detail">
+                            <h5 class="text-primary"><i class="bi bi-clock"></i> Class Timing</h5>
+                            <p>Flexible Timings</p>
+                        </div>
+                        <hr>
+                        <div class="course-detail">
+                            <h5 class="text-primary"><i class="bi bi-credit-card"></i> Fees Structure</h5>
+                            <p>Per Subject: ₹250/-</p>
+                        </div>
+                        <hr>
+                        <div class="course-detail">
+                            <h5 class="text-primary"><i class="bi bi-star"></i> Speciality</h5>
+                            <p>Personalized Attention: One tutor dedicated to each student for focused learning.</p>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-transparent text-center">
+                        <button class="btn btn-primary">Enroll Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Additional Information Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center mb-5">
+                <h2 class="fw-bold">Why Choose Our Courses?</h2>
+                <p class="lead">We provide quality education with excellent facilities</p>
+            </div>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-4 text-center">
+                <div class="feature-icon mb-3">
+                    <i class="bi bi-person-check display-4 text-primary"></i>
+                </div>
+                <h4>Expert Faculty</h4>
+                <p>Our teachers are highly qualified and experienced in their respective fields.</p>
+            </div>
+            <div class="col-md-4 text-center">
+                <div class="feature-icon mb-3">
+                    <i class="bi bi-book display-4 text-primary"></i>
+                </div>
+                <h4>Study Materials</h4>
+                <p>Comprehensive study materials and regular tests to track progress.</p>
+            </div>
+            <div class="col-md-4 text-center">
+                <div class="feature-icon mb-3">
+                    <i class="bi bi-display display-4 text-primary"></i>
+                </div>
+                <h4>Digital Classroom</h4>
+                <p>Technology-enabled classrooms for interactive learning experience.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .courses-hero {
+        background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('{% static "images/courses-banner.jpg" %}') center/cover no-repeat;
+    }
+    
+    .course-card {
+        border-radius: 10px;
+        transition: transform 0.3s ease;
+    }
+    
+    .course-card:hover {
+        transform: translateY(-5px);
+    }
+    
+    .course-detail {
+        margin-bottom: 1rem;
+    }
+    
+    @media (max-width: 768px) {
+        .courses-hero .display-4 {
+            font-size: 2rem;
+        }
+        
+        .card-body {
+            padding: 1rem;
+        }
+        
+        .course-card {
+            margin-bottom: 1.5rem;
+        }
+    }
+</style>
+
+<!-- Bootstrap Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+
+{% endblock %}

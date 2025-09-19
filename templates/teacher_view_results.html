@@ -1,0 +1,156 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4 min-vh-100">
+    <div class="card shadow">
+        <div class="card-header bg-info text-white">
+            <h4 class="mb-0">📊 My Uploaded Results - {{ user.subject }}</h4>
+        </div>
+        <div class="card-body">
+            <!-- Filter Form -->
+            <form method="get" class="row g-2 g-md-3 mb-4">
+                <div class="col-12 col-md-4">
+                    <label class="form-label">Class</label>
+                    <select name="class_name" class="form-control">
+                        <option value="">All Classes</option>
+                        {% for value, label in class_choices %}
+                        <option value="{{ value }}" {% if class_name == value %}selected{% endif %}>
+                            {{ label }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-12 col-md-4">
+                    <label class="form-label">Subject</label>
+                    <input type="text" name="subject" class="form-control" value="{{ subject }}" 
+                           placeholder="Enter subject">
+                </div>
+                <div class="col-12 col-md-4 d-flex align-items-end">
+                    <button type="submit" class="btn btn-primary w-100">Filter</button>
+                </div>
+            </form>
+
+            <!-- Statistics -->
+            <div class="row mb-4">
+                <div class="col-6 col-md-4 mb-3 mb-md-0">
+                    <div class="card text-center bg-light h-100">
+                        <div class="card-body py-3">
+                            <h5 class="card-title mb-0">{{ results.count }}</h5>
+                            <p class="card-text mb-0">Results Uploaded</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-4 mb-3 mb-md-0">
+                    <div class="card text-center bg-light h-100">
+                        <div class="card-body py-3">
+                            <h5 class="card-title mb-0">{{ total_students }}</h5>
+                            <p class="card-text mb-0">Students</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4">
+                    <div class="card text-center bg-light h-100">
+                        <div class="card-body py-3">
+                            <h5 class="card-title mb-0">{{ average_marks }}</h5>
+                            <p class="card-text mb-0">Average Marks</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results Table -->
+            {% if results %}
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Student</th>
+                            <th>Class</th>
+                            <th>Subject</th>
+                            <th>Marks</th>
+                            <th>Percentage</th>
+                            <th>Grade</th>
+                            <th>Uploaded Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for result in results %}
+                        <tr>
+                            <td>{{ result.student.get_full_name }}</td>
+                            <td>Class {{ result.class_name }}</td>
+                            <td>{{ result.subject }}</td>
+                            <td>{{ result.marks }}/{{ result.total_marks }}</td>
+                            <td>{{ result.percentage|floatformat:2 }}%</td>
+                            <td>
+                                <span class="badge 
+                                    {% if result.percentage >= 90 %}bg-success
+                                    {% elif result.percentage >= 70 %}bg-primary
+                                    {% elif result.percentage >= 50 %}bg-warning
+                                    {% else %}bg-danger{% endif %}">
+                                    {{ result.grade }}
+                                </span>
+                            </td>
+                            <td>{{ result.uploaded_at|date:"M d, Y" }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="text-center py-4">
+                <p class="text-muted">No results found.</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<style>
+/* Ensure footer stays at bottom */
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.container.min-vh-100 {
+    flex: 1 0 auto;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .card-body {
+        padding: 1rem;
+    }
+    
+    .table th, .table td {
+        padding: 0.5rem;
+        font-size: 0.875rem;
+    }
+    
+    .badge {
+        font-size: 0.75rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .card-header h4 {
+        font-size: 1.1rem;
+    }
+    
+    .form-label {
+        font-size: 0.9rem;
+        margin-bottom: 0.3rem;
+    }
+    
+    .card-title {
+        font-size: 1.1rem;
+    }
+    
+    .card-text {
+        font-size: 0.8rem;
+    }
+}
+</style>
+{% endblock %}

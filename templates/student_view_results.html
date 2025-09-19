@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4 min-vh-100">
+    <div class="card shadow">
+        <div class="card-header bg-success text-white">
+            <h4 class="mb-0">🎯 My Results</h4>
+        </div>
+        <div class="card-body">
+            <!-- Overall Performance -->
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <div class="stat-card text-center bg-light p-3 rounded">
+                        <h5 class="text-primary">Total Subjects</h5>
+                        <h3>{{ results.count }}</h3>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="stat-card text-center bg-light p-3 rounded">
+                        <h5 class="text-info">Overall Average</h5>
+                        <h3>{{ overall_avg|floatformat:2 }}%</h3>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results Table -->
+            {% if results %}
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Subject</th>
+                            <th>Marks Obtained</th>
+                            <th>Total Marks</th>
+                            <th>Percentage</th>
+                            <th>Grade</th>
+                            <th>Uploaded On</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for result in results %}
+                        <tr>
+                            <td>{{ result.subject }}</td>
+                            <td>{{ result.marks }}</td>
+                            <td>{{ result.total_marks }}</td>
+                            <td>{{ result.marks_percentage|floatformat:2 }}%</td>
+                            <td>
+                                {% if result.marks_percentage >= 80 %}
+                                <span class="badge bg-success">A</span>
+                                {% elif result.marks_percentage >= 60 %}
+                                <span class="badge bg-primary">B</span>
+                                {% elif result.marks_percentage >= 40 %}
+                                <span class="badge bg-warning">C</span>
+                                {% else %}
+                                <span class="badge bg-danger">F</span>
+                                {% endif %}
+                            </td>
+                            <td>{{ result.uploaded_at|date:"M d, Y" }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="text-center py-4">
+                <p class="text-muted">No results available yet.</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="footer mt-auto py-3 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <p class="text-muted mb-0">© 2023 School Management System. All rights reserved.</p>
+            </div>
+            <div class="col-md-6 text-md-end">
+                <a href="#" class="text-muted me-3">Privacy Policy</a>
+                <a href="#" class="text-muted">Terms of Service</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<style>
+    /* Custom CSS for sticky footer */
+    body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
+    
+    .footer {
+        margin-top: auto;
+    }
+    
+    /* Ensure content container takes available space */
+    .min-vh-100 {
+        min-height: 70vh;
+    }
+    
+    /* Additional styling for the stat cards */
+    .stat-card {
+        transition: transform 0.3s;
+    }
+    
+    .stat-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+</style>
+{% endblock %}

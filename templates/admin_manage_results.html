@@ -1,0 +1,186 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="card shadow-lg">
+        <div class="card-header bg-primary text-white">
+            <div class="d-flex justify-content-between align-items-center">
+                <h4 class="mb-0">📊 Manage Results</h4>
+                <span class="badge bg-light text-primary">
+                    {{ total_results }} Result{{ total_results|pluralize }}
+                </span>
+            </div>
+        </div>
+        
+        <div class="card-body">
+            <!-- Filter Section -->
+            <div class="row mb-4">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header bg-light">
+                            <h5 class="mb-0">🔍 Filter Results</h5>
+                        </div>
+                        <div class="card-body">
+                            <form method="get" class="row g-3">
+                                <div class="col-md-5">
+                                    <label class="form-label fw-bold">Class</label>
+                                    <select name="class_name" class="form-select">
+                                        {% for value, label in class_choices %}
+                                        <option value="{{ value }}" {% if selected_class == value %}selected{% endif %}>
+                                            {% if value %}{{ label }}{% else %}{{ label }}{% endif %}
+                                        </option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                
+                                <div class="col-md-5">
+                                    <label class="form-label fw-bold">Subject</label>
+                                    <select name="subject" class="form-select">
+                                        {% for value, label in subject_choices %}
+                                        <option value="{{ value }}" {% if selected_subject == value %}selected{% endif %}>
+                                            {{ label }}
+                                        </option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                
+                                <div class="col-md-2 d-flex align-items-end">
+                                    <button type="submit" class="btn btn-primary w-100">
+                                        <i class="fas fa-filter me-1"></i> Filter
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results Table -->
+            {% if results %}
+            <div class="table-responsive">
+                <table class="table table-striped table-hover">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Student</th>
+                            <th>Class</th>
+                            <th>Subject</th>
+                            <th>Marks Obtained</th>
+                            <th>Total Marks</th>
+                            <th>Percentage</th>
+                            <th>Grade</th>
+                            <th>Teacher</th>
+                            <th>Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for result in results %}
+                        <tr>
+                            <td>
+                                <strong>{{ result.student.get_full_name }}</strong>
+                                {% if result.student.roll_number %}
+                                <br>
+                                <small class="text-muted">Roll No: {{ result.student.roll_number }}</small>
+                                {% endif %}
+                            </td>
+                            <td>Class {{ result.class_name }}</td>
+                            <td>{{ result.subject }}</td>
+                            <td class="fw-bold">{{ result.marks }}</td>
+                            <td>{{ result.total_marks }}</td>
+                            <td>
+                                <span class="badge bg-secondary">
+                                    {{ result.percentage|floatformat:1 }}%
+                                </span>
+                            </td>
+                            <td>
+                                <span class="badge bg-{{ result.grade_class }}">
+                                    {{ result.grade }}
+                                </span>
+                            </td>
+                            <td>{{ result.uploaded_by.get_full_name }}</td>
+                            <td>{{ result.uploaded_at|date:"M d, Y" }}</td>
+                            <td>
+                                <div class="btn-group">
+                                    <a href="{% url 'admin_delete_result' result.id %}" 
+                                       class="btn btn-sm btn-danger"
+                                       onclick="return confirm('Are you sure you want to delete {{ result.student.get_full_name }}\'s {{ result.subject }} result?')">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Summary Statistics -->
+            <div class="row mt-4">
+                <div class="col-md-4">
+                    <div class="card bg-primary text-white text-center">
+                        <div class="card-body py-3">
+                            <h4 class="mb-0">{{ total_results }}</h4>
+                            <small>Total Results</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card bg-success text-white text-center">
+                        <div class="card-body py-3">
+                            <h4 class="mb-0">{{ average_marks|floatformat:2 }}</h4>
+                            <small>Average Marks</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card bg-info text-white text-center">
+                        <div class="card-body py-3">
+                            <h4 class="mb-0">
+                                {% if results %}
+                                    {{ average_marks|floatformat:2 }}%
+                                {% else %}
+                                    0%
+                                {% endif %}
+                            </h4>
+                            <small>Average Percentage</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            {% else %}
+            <div class="text-center py-5">
+                <div class="text-muted">
+                    <i class="fas fa-search fa-3x mb-3"></i>
+                    <h4>No Results Found</h4>
+                    <p>
+                        {% if selected_class or selected_subject %}
+                        No results match your filter criteria. Try different filters.
+                        {% else %}
+                        No results have been uploaded yet.
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!-- Add FontAwesome for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+<style>
+.table th {
+    font-weight: 600;
+    background-color: #f8f9fa;
+}
+.card-header {
+    border-bottom: 1px solid rgba(0,0,0,.125);
+}
+.badge {
+    font-size: 0.85em;
+}
+</style>
+{% endblock %}

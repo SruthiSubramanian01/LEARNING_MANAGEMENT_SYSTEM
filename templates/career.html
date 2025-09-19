@@ -1,0 +1,311 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Career Opportunities - Wisdom Learning Academy{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="career-hero bg-primary text-white py-5">
+    <div class="container py-4">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <h1 class="display-4 fw-bold mb-3">Join Our Team</h1>
+                <p class="lead mb-4">Shape young minds and build your career with Wisdom Learning Academy</p>
+                <div class="d-flex justify-content-center flex-wrap gap-3">
+                    <span class="badge bg-light text-dark fs-6 p-2"><i class="bi bi-people me-1"></i>Supportive Environment</span>
+                    <span class="badge bg-light text-dark fs-6 p-2"><i class="bi bi-graph-up me-1"></i>Career Growth</span>
+                    <span class="badge bg-light text-dark fs-6 p-2"><i class="bi bi-award me-1"></i>Professional Development</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Benefits Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row justify-content-center mb-5">
+            <div class="col-lg-8 text-center">
+                <h2 class="fw-bold mb-3">Why Work With Us?</h2>
+                <p class="lead text-muted">We value our educators and provide an environment where they can thrive</p>
+            </div>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="text-center">
+                    <div class="benefit-icon bg-primary bg-opacity-10 rounded-circle p-3 d-inline-flex align-items-center justify-content-center mb-3">
+                        <i class="bi bi-cash-coin text-primary fs-1"></i>
+                    </div>
+                    <h5>Competitive Salary</h5>
+                    <p class="text-muted">We offer attractive compensation packages with regular reviews</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="text-center">
+                    <div class="benefit-icon bg-primary bg-opacity-10 rounded-circle p-3 d-inline-flex align-items-center justify-content-center mb-3">
+                        <i class="bi bi-book text-primary fs-1"></i>
+                    </div>
+                    <h5>Continuous Learning</h5>
+                    <p class="text-muted">Regular training sessions and workshops for professional development</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="text-center">
+                    <div class="benefit-icon bg-primary bg-opacity-10 rounded-circle p-3 d-inline-flex align-items-center justify-content-center mb-3">
+                        <i class="bi bi-calendar-check text-primary fs-1"></i>
+                    </div>
+                    <h5>Flexible Schedule</h5>
+                    <p class="text-muted">Balance your work and personal life with our flexible scheduling options</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Application Form Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
+                    <div class="card-header bg-gradient-primary text-white py-4">
+                        <h2 class="mb-0 text-center"><i class="bi bi-person-plus me-2"></i>Career Application Form</h2>
+                        <p class="text-center mb-0 opacity-75">Submit your application to join our team of dedicated educators</p>
+                    </div>
+                    <div class="card-body p-4 p-md-5">
+                        {% if messages %}
+                        <div class="mb-4">
+                            {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                                <i class="bi {% if message.tags == 'success' %}bi-check-circle-fill{% else %}bi-exclamation-triangle-fill{% endif %} me-2"></i>
+                                {{ message }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+
+                        <form method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            
+                            <div class="row">
+                                <!-- Name -->
+                                <div class="col-md-6 mb-4">
+                                    <label for="id_name" class="form-label fw-semibold">Full Name</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="bi bi-person"></i></span>
+                                        <input type="text" class="form-control form-control-lg" id="id_name" name="name" 
+                                               placeholder="Enter your full name">
+                                    </div>
+                                    {% if form.name.errors %}
+                                    <div class="text-danger small mt-1">{{ form.name.errors }}</div>
+                                    {% endif %}
+                                </div>
+
+                                <!-- Age -->
+                                <div class="col-md-6 mb-4">
+                                    <label for="id_age" class="form-label fw-semibold">Age</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="bi bi-calendar"></i></span>
+                                        <input type="number" class="form-control form-control-lg" id="id_age" name="age" 
+                                               min="18" placeholder="Enter your age">
+                                    </div>
+                                    {% if form.age.errors %}
+                                    <div class="text-danger small mt-1">{{ form.age.errors }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <!-- Place -->
+                                <div class="col-md-6 mb-4">
+                                    <label for="id_place" class="form-label fw-semibold">Place</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="bi bi-geo-alt"></i></span>
+                                        <input type="text" class="form-control form-control-lg" id="id_place" name="place" 
+                                               placeholder="Enter your city/town">
+                                    </div>
+                                    {% if form.place.errors %}
+                                    <div class="text-danger small mt-1">{{ form.place.errors }}</div>
+                                    {% endif %}
+                                </div>
+
+                                <!-- Qualification -->
+                                <div class="col-md-6 mb-4">
+                                    <label for="id_qualification" class="form-label fw-semibold">Qualification</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="bi bi-mortarboard"></i></span>
+                                        <select class="form-select form-select-lg" id="id_qualification" name="qualification">
+                                            <option value="" selected>Select your qualification</option>
+                                            <option value="high_school">High School</option>
+                                            <option value="diploma">Diploma</option>
+                                            <option value="bachelor">Bachelor's Degree</option>
+                                            <option value="master">Master's Degree</option>
+                                            <option value="phd">PhD</option>
+                                            <option value="other">Other</option>
+                                        </select>
+                                    </div>
+                                    {% if form.qualification.errors %}
+                                    <div class="text-danger small mt-1">{{ form.qualification.errors }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <!-- Resume Upload -->
+                            <div class="mb-4">
+                                <label for="id_resume" class="form-label fw-semibold">Upload Resume</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-file-earmark-arrow-up"></i></span>
+                                    <input type="file" class="form-control form-control-lg" id="id_resume" name="resume" 
+                                           accept=".pdf,.doc,.docx">
+                                </div>
+                                <div class="form-text ms-3">Accepted formats: PDF, DOC, DOCX (Max 10MB)</div>
+                                {% if form.resume.errors %}
+                                <div class="text-danger small mt-1">{{ form.resume.errors }}</div>
+                                {% endif %}
+                            </div>
+
+                            <!-- Contact Number -->
+                            <div class="mb-4">
+                                <label for="id_contact" class="form-label fw-semibold">Contact Number</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-telephone"></i></span>
+                                    <input type="tel" class="form-control form-control-lg" id="id_contact" name="contact" 
+                                           placeholder="10-digit mobile number">
+                                </div>
+                                {% if form.contact.errors %}
+                                <div class="text-danger small mt-1">{{ form.contact.errors }}</div>
+                                {% endif %}
+                            </div>
+
+                            <!-- Buttons -->
+                            <div class="d-flex justify-content-between mt-4 flex-wrap gap-3">
+                                <button type="reset" class="btn btn-outline-secondary px-4 py-2">
+                                    <i class="bi bi-arrow-repeat me-2"></i>Clear Form
+                                </button>
+                                <button type="submit" class="btn btn-primary px-4 py-2">
+                                    <i class="bi bi-send me-2"></i>Submit Application
+                                </button>
+                            </div>
+                        </form>
+
+                        <!-- Additional Information -->
+                        <div class="mt-5 pt-4 border-top">
+                            <h5 class="text-primary mb-3"><i class="bi bi-info-circle me-2"></i>What Happens Next?</h5>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="d-flex mb-3">
+                                        <div class="me-3">
+                                            <div class="bg-primary bg-opacity-10 rounded-circle p-2">
+                                                <i class="bi bi-search text-primary fs-5"></i>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <h6 class="fw-semibold">Application Review</h6>
+                                            <p class="text-muted mb-0">Your application will be reviewed by our principal</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="d-flex mb-3">
+                                        <div class="me-3">
+                                            <div class="bg-primary bg-opacity-10 rounded-circle p-2">
+                                                <i class="bi bi-people text-primary fs-5"></i>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <h6 class="fw-semibold">Interview Process</h6>
+                                            <p class="text-muted mb-0">Shortlisted candidates will be contacted for an interview</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Information -->
+                <div class="card shadow-sm border-0 rounded-3 mt-4">
+                    <div class="card-body text-center p-4">
+                        <h5 class="text-primary mb-3"><i class="bi bi-question-circle me-2"></i>Need Help?</h5>
+                        <div class="d-flex justify-content-center flex-wrap gap-4">
+                            <div>
+                                <i class="bi bi-envelope text-primary me-2"></i>
+                                <span>careers@wisdomacademy.edu</span>
+                            </div>
+                            <div>
+                                <i class="bi bi-telephone text-primary me-2"></i>
+                                <span>+91-9876543210</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Bootstrap Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+
+<style>
+    .career-hero {
+        background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('{% static "images/career-banner.jpg" %}') center/cover no-repeat;
+    }
+    
+    .bg-gradient-primary {
+        background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%) !important;
+    }
+    
+    .benefit-icon {
+        width: 80px;
+        height: 80px;
+        transition: transform 0.3s ease;
+    }
+    
+    .benefit-icon:hover {
+        transform: scale(1.1);
+    }
+    
+    .form-control, .form-select {
+        border-left: none;
+        padding: 12px 16px;
+        transition: all 0.3s ease;
+    }
+    
+    .input-group-text {
+        background-color: #f8f9fa;
+        border-right: none;
+    }
+    
+    .form-control:focus, .form-select:focus {
+        box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.15);
+        border-color: #86b7fe;
+    }
+    
+    .form-control:focus + .input-group-text {
+        border-color: #86b7fe;
+        background-color: #f8f9fa;
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .career-hero .display-4 {
+            font-size: 2.2rem;
+        }
+        
+        .card-body {
+            padding: 1.5rem;
+        }
+        
+        .btn {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        
+        .d-flex.justify-content-between {
+            flex-direction: column;
+        }
+    }
+</style>
+{% endblock %}

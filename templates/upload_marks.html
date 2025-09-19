@@ -1,0 +1,148 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container-fluid mt-3 mt-md-4 min-vh-100">
+    <div class="row">
+        <!-- Upload Marks Card - Full width on mobile, half on larger screens -->
+        <div class="col-12 col-md-6 mb-4 mb-md-0">
+            <div class="card shadow h-100">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">📊 Upload Marks</h4>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                        <div class="form-group mb-3">
+                            <label class="form-label">Student</label>
+                            {{ form.student }}
+                        </div>
+                        
+                        <div class="form-group mb-3">
+                            <label class="form-label">Class</label>
+                            {{ form.class_name }}
+                        </div>
+                        
+                        <div class="form-group mb-3">
+                            <label class="form-label">Subject</label>
+                            {{ form.subject }}
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-12 col-sm-6">
+                                <div class="form-group mb-3">
+                                    <label class="form-label">Marks Obtained</label>
+                                    {{ form.marks }}
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6">
+                                <div class="form-group mb-3">
+                                    <label class="form-label">Total Marks</label>
+                                    {{ form.total_marks }}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-success w-100">Upload Marks</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Recent Marks Card - Full width on mobile, half on larger screens -->
+        <div class="col-12 col-md-6">
+            <div class="card shadow h-100">
+                <div class="card-header bg-info text-white">
+                    <h4 class="mb-0">📋 Recently Uploaded Marks</h4>
+                </div>
+                <div class="card-body p-0 d-flex flex-column">
+                    {% if recent_results %}
+                    <div class="table-responsive flex-grow-1">
+                        <table class="table table-sm table-hover mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th class="ps-3">Student</th>
+                                    <th>Subject</th>
+                                    <th>Marks</th>
+                                    <th class="pe-3">Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for result in recent_results %}
+                                <tr>
+                                    <td class="ps-3 text-truncate" style="max-width: 120px;" title="{{ result.student.first_name }}">{{ result.student.first_name }}</td>
+                                    <td class="text-truncate" style="max-width: 100px;" title="{{ result.subject }}">{{ result.subject }}</td>
+                                    <td>{{ result.marks }}/{{ result.total_marks }}</td>
+                                    <td class="pe-3">{{ result.uploaded_at|date:"M d" }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% else %}
+                    <div class="text-center py-4 flex-grow-1 d-flex align-items-center justify-content-center">
+                        <p class="text-muted m-0">No marks uploaded yet.</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+/* Ensure footer stays at bottom */
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.min-vh-100 {
+    flex: 1 0 auto;
+}
+
+/* Custom responsive styles */
+@media (max-width: 576px) {
+    .card-header h4 {
+        font-size: 1.1rem;
+    }
+    
+    .form-label {
+        font-size: 0.9rem;
+        margin-bottom: 0.3rem;
+    }
+    
+    .form-control, .form-select {
+        font-size: 0.9rem;
+        padding: 0.5rem;
+    }
+    
+    .btn {
+        padding: 0.5rem;
+    }
+}
+
+/* Ensure form elements are properly styled on all devices */
+.form-control, .form-select {
+    width: 100%;
+}
+
+/* Improve table readability on small devices */
+@media (max-width: 768px) {
+    .table th, .table td {
+        padding: 0.5rem;
+    }
+}
+
+/* Card height adjustments */
+.h-100 {
+    height: 100% !important;
+}
+
+.flex-grow-1 {
+    flex-grow: 1;
+}
+</style>
+{% endblock %}

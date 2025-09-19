@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header {% if notice.is_important %}bg-warning text-dark{% else %}bg-info text-white{% endif %}">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h4 class="mb-0">{{ notice.title }}</h4>
+                        {% if notice.is_important %}
+                        <span class="badge bg-danger">Important</span>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="notice-meta mb-4">
+                        <div class="d-flex justify-content-between align-items-center text-muted small">
+                            <span>
+                                <i class="fas fa-user"></i> By: {{ notice.created_by.get_full_name }}
+                            </span>
+                            <span>
+                                <i class="fas fa-clock"></i> {{ notice.created_at|date:"M d, Y H:i" }}
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <div class="notice-content">
+                        {{ notice.content|linebreaks }}
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="{% if user.role == 'teacher' %}{% url 'teacher_notices' %}{% elif user.role == 'student' %}{% url 'student_notices' %}{% else %}{% url 'admin_notices' %}{% endif %}" 
+                       class="btn btn-secondary">
+                        <i class="fas fa-arrow-left me-2"></i>Back to Notices
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add FontAwesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+<style>
+.card {
+    border: none;
+    border-radius: 10px;
+}
+.notice-content {
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+.badge {
+    font-size: 0.8rem;
+}
+</style>
+{% endblock %}

@@ -1,0 +1,165 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5" style="min-height: 70vh;">
+    <h2 class="text-center mb-4">👨‍🏫 Manage Teachers</h2>
+
+    <!-- Teachers Table -->
+    <div class="card shadow">
+        <div class="card-header bg-success text-white">
+            <h4 class="mb-0">✅ Approved Teachers List</h4>
+        </div>
+        <div class="card-body">
+            {% if teachers %}
+            <div class="table-responsive">
+                <table class="table table-striped table-hover">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Sl.No</th>
+                            <th>Username</th>
+                            <th>Full Name</th>
+                            <th>Email</th>
+                            <th>Subject</th>
+                            <th>Qualification</th>
+                            <th>Date Joined</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for teacher in teachers %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td><strong>{{ teacher.username }}</strong></td>
+                            <td>{{ teacher.first_name }} {{ teacher.last_name }}</td>
+                            <td>{{ teacher.email }}</td>
+                            <td>{{ teacher.subject }}</td>
+                            <td>{{ teacher.qualification }}</td>
+                            <td>{{ teacher.date_joined|date:"M d, Y" }}</td>
+                            <td>
+                                <div class="btn-group">
+                                    <a href="{% url 'edit_teacher' teacher.id %}" class="btn btn-warning btn-sm">
+                                        ✏️ Edit
+                                    </a>
+                                    <a href="{% url 'delete_teacher' teacher.id %}" class="btn btn-danger btn-sm">
+                                        🗑️ Delete
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="text-center py-4">
+                <p class="text-muted">No approved teachers found.</p>
+                <i class="fas fa-users fa-3x text-muted"></i>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Ensure footer stays at bottom */
+    body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
+    
+    .container.mt-5 {
+        flex: 1;
+    }
+    
+    /* Responsive table adjustments */
+    @media (max-width: 992px) {
+        .table-responsive {
+            overflow-x: auto;
+        }
+        
+        .btn-group {
+            flex-direction: column;
+        }
+        
+        .btn-group .btn {
+            margin-bottom: 5px;
+        }
+    }
+    
+    @media (max-width: 768px) {
+        .table thead {
+            display: none;
+        }
+        
+        .table tbody tr {
+            display: block;
+            margin-bottom: 1rem;
+            border: 1px solid #dee2e6;
+            border-radius: 0.25rem;
+        }
+        
+        .table tbody td {
+            display: block;
+            text-align: right;
+            padding: 0.5rem;
+            position: relative;
+            padding-left: 50%;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .table tbody td:last-child {
+            border-bottom: none;
+        }
+        
+        .table tbody td::before {
+            content: attr(data-label);
+            position: absolute;
+            left: 0.5rem;
+            width: 45%;
+            padding-right: 0.5rem;
+            text-align: left;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+        
+        /* Add data labels for mobile view */
+        tr td:nth-child(1):before { content: "Sl.No: "; }
+        tr td:nth-child(2):before { content: "Username: "; }
+        tr td:nth-child(3):before { content: "Full Name: "; }
+        tr td:nth-child(4):before { content: "Email: "; }
+        tr td:nth-child(5):before { content: "Subject: "; }
+        tr td:nth-child(6):before { content: "Qualification: "; }
+        tr td:nth-child(7):before { content: "Date Joined: "; }
+        tr td:nth-child(8):before { content: "Actions: "; }
+    }
+    
+    @media (max-width: 576px) {
+        .card-header h4 {
+            font-size: 1.2rem;
+        }
+        
+        h2 {
+            font-size: 1.5rem;
+        }
+    }
+</style>
+
+<script>
+    // Add data labels for mobile responsive table
+    document.addEventListener('DOMContentLoaded', function() {
+        if (window.innerWidth <= 768) {
+            const ths = document.querySelectorAll('thead th');
+            const tds = document.querySelectorAll('tbody td');
+            
+            tds.forEach(td => {
+                const index = Array.from(td.parentNode.children).indexOf(td);
+                if (index < ths.length) {
+                    td.setAttribute('data-label', ths[index].textContent);
+                }
+            });
+        }
+    });
+</script>
+{% endblock %}

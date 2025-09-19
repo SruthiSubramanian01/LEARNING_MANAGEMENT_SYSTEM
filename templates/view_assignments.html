@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4 min-vh-100">
+    <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">📝 Assignments</h4>
+        </div>
+        <div class="card-body">
+            {% if assignments %}
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Subject</th>
+                            <th>Title</th>
+                            <th>Due Date</th>
+                            <th>Teacher</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for assignment in assignments %}
+                        <tr>
+                            <td>{{ assignment.subject }}</td>
+                            <td>{{ assignment.title }}</td>
+                            <td>{{ assignment.due_date|date:"M d, Y" }}</td>
+                            <td>{{ assignment.created_by.get_full_name }}</td>
+                            <td>
+                                {% if assignment.file %}
+                                <a href="{{ assignment.file.url }}" class="btn btn-sm btn-info" download>
+                                    📥 Download
+                                </a>
+                                {% endif %}
+                                
+                                <!-- Add this section for submission -->
+                                {% if user.role == 'student' %}
+                                <a href="{% url 'submit_assignment' assignment.id %}" class="btn btn-sm btn-success">
+                                    📤 Submit
+                                </a>
+                                {% elif user.role == 'teacher' and user == assignment.created_by %}
+                                <a href="{% url 'view_assignment_submissions' assignment.id %}" class="btn btn-sm btn-primary">
+                                    📋 View Submissions ({{ assignment.assignmentsubmission_set.count }})
+                                </a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="text-center py-4">
+                <p class="text-muted">No assignments available.</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="footer mt-auto py-3 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <p class="text-muted mb-0">© 2023 School Management System. All rights reserved.</p>
+            </div>
+            <div class="col-md-6 text-md-end">
+                <a href="#" class="text-muted me-3">Privacy Policy</a>
+                <a href="#" class="text-muted">Terms of Service</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<style>
+    /* Custom CSS for sticky footer */
+    body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
+    
+    .footer {
+        margin-top: auto;
+    }
+    
+    /* Ensure content container takes available space */
+    .min-vh-100 {
+        min-height: 70vh;
+    }
+</style>
+{% endblock %}

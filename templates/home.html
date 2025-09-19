@@ -1,0 +1,50 @@
+{% extends 'base.html'%}
+{% load static %}
+
+{%block title%}
+{%endblock%}
+{%block content%}
+
+<div class="firstdiv-main"> 
+    <div class="firstdivleft">
+      
+      <h5><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-book" viewBox="0 0 16 16">
+        <path d="M1 2.828c.885-.37 2.154-.769 3.388-.893 1.33-.134 2.458.063 3.112.752v9.746c-.935-.53-2.12-.603-3.213-.493-1.18.12-2.37.461-3.287.811zm7.5-.141c.654-.689 1.782-.886 3.112-.752 1.234.124 2.503.523 3.388.893v9.923c-.918-.35-2.107-.692-3.287-.81-1.094-.111-2.278-.039-3.213.492zM8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783"/>
+        
+      </svg>&nbsp;&nbsp;&nbsp;Empower Learning</h5>
+        <h1>We Elighten your future</h1><br>
+        <h5>Join our Wisdom family, where education meets innovation, creating a dynamic <br>environment that empowers students to excel academically and personally,<br> while enabling teachers to inspire, guide, and shape the leaders of tomorrow.</h5><br><br>
+        <button class="regbtn">Register<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+          <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/>
+          </svg>
+        </button>
+    </div>
+    <div class="firstdivright">
+        <img id="firstdivimg" src="{% static 'images/student.png' %}">
+    </div>
+</div>
+<div class="secdiv-main">
+  <h1 class="secdiv-title">Why Choose Wisdom?</h1><br>
+
+<div class="secdivsub">
+  <div class="box"><b>Affordable Fees</b><hr>
+  <p>We believe quality education should be accessible to everyone. <br>Our fee structure is kept low to ease the financial burden on students and parents. As an added benefit, the fees for the final two months of the academic year are completely waived, and this amount is considered as your admission fee—making education both affordable and rewarding.</p>
+  </div>
+  <div class="box"><b>Dedicated Teachers</b><hr>
+  <p>At our tuition center, we take pride in having a team of passionate educators who possess exceptional subject knowledge.<br> They combine their expertise with interactive, student-friendly methods that make learning enjoyable and easy to grasp. By focusing on each learner’s unique strengths and challenges, our teachers inspire confidence, encourage curiosity, and help students achieve academic excellence.</p>
+  </div>
+  <div class="box"><b>Study Materials</b><hr>
+  <p>Access comprehensive subject-wise notes directly through our application once you log in. In addition to these, you will find previous years’ question papers as well as exclusive question papers prepared by our faculty to support your exam preparation.</p>
+  </div>
+  <div class="box"><b>Parental Feedback</b><hr>
+    <p>We believe that a student’s success is a shared journey between teachers,students,and parents.We provides regular, detailed progress reports that highlight each learner’s strengths, areas for improvement, and overall academic growth. We maintain open lines of communication with parents through scheduled meetings, feedback sessions, and timely updates—ensuring that they are always informed and empowered to support their child’s learning journey.</p>
+  </div>
+  <div class="box"><b>Support For Supply Students</b><hr>
+  <p>We offer dedicated support for supplementary students, providing personalized guidance to help them grasp academic concepts more effectively, boost confidence, and improve performance—all at an affordable fee, with flexible timings to suit individual learning needs.</p></div>
+  <div class="box"><b>Interactive Learning</b><hr>
+  <p>We create an engaging classroom environment where students are encouraged to ask questions, clarify doubts, and actively participate in discussions. Regular interactive sessions, coupled with stress-free activities and educational games, make learning enjoyable while enhancing focus and understanding.</p></div>
+</div>
+</div>
+{%endblock%}
+</body>
+</html>

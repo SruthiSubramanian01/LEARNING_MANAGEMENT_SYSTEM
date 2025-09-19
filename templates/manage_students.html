@@ -1,0 +1,172 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4" style="min-height: 70vh;">
+    <h2 class="text-center mb-4">👩‍🎓 Manage Students</h2>
+
+    <!-- Students Table -->
+    <div class="card shadow">
+        <div class="card-header bg-info text-white">
+            <h4 class="mb-0">✅ Approved Students List</h4>
+        </div>
+        <div class="card-body">
+            {% if students %}
+            <div class="table-responsive">
+                <table class="table table-striped table-hover">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Sl.No</th>
+                            <th>Username</th>
+                            <th>Full Name</th>
+                            <th>Email</th>
+                            <th>Class</th>
+                            <th>Date Joined</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for student in students %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td><strong>{{ student.username }}</strong></td>
+                            <td>{{ student.first_name }} {{ student.last_name }}</td>
+                            <td>{{ student.email }}</td>
+                            <td><span class="badge bg-primary">{{ student.student_class }}</span></td>
+                            <td>{{ student.date_joined|date:"M d, Y" }}</td>
+                            <td>
+                                <div class="btn-group">
+                                    <a href="{% url 'edit_student' student.id %}" class="btn btn-warning btn-sm">
+                                        ✏️ Edit
+                                    </a>
+                                    <a href="{% url 'delete_student' student.id %}" class="btn btn-danger btn-sm">
+                                        🗑️ Delete
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="text-center py-4">
+                <p class="text-muted">No approved students found.</p>
+                <i class="fas fa-users fa-3x text-muted"></i>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Responsive table adjustments */
+    @media (max-width: 992px) {
+        .table-responsive {
+            overflow-x: auto;
+        }
+        
+        .btn-group {
+            flex-direction: column;
+        }
+        
+        .btn-group .btn {
+            margin-bottom: 5px;
+            font-size: 0.8rem;
+        }
+    }
+    
+    @media (max-width: 768px) {
+        /* Transform table to card layout on mobile */
+        .table thead {
+            display: none;
+        }
+        
+        .table tbody tr {
+            display: block;
+            margin-bottom: 1rem;
+            border: 1px solid #dee2e6;
+            border-radius: 0.25rem;
+            padding: 0.5rem;
+        }
+        
+        .table tbody td {
+            display: block;
+            text-align: right;
+            padding: 0.5rem;
+            position: relative;
+            padding-left: 50%;
+            border-bottom: 1px solid #f1f1f1;
+        }
+        
+        .table tbody td:last-child {
+            border-bottom: none;
+            text-align: center;
+            padding-left: 0.5rem;
+        }
+        
+        .table tbody td::before {
+            content: attr(data-label);
+            position: absolute;
+            left: 0.5rem;
+            width: 45%;
+            padding-right: 0.5rem;
+            text-align: left;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+        
+        /* Add data labels for mobile view */
+        tr td:nth-child(1):before { content: "Sl.No: "; }
+        tr td:nth-child(2):before { content: "Username: "; }
+        tr td:nth-child(3):before { content: "Full Name: "; }
+        tr td:nth-child(4):before { content: "Email: "; }
+        tr td:nth-child(5):before { content: "Class: "; }
+        tr td:nth-child(6):before { content: "Date Joined: "; }
+        
+        /* Special handling for action buttons */
+        tr td:nth-child(7)::before {
+            display: none;
+        }
+        
+        .badge {
+            font-size: 0.8em;
+        }
+    }
+    
+    @media (max-width: 576px) {
+        .card-header h4 {
+            font-size: 1.2rem;
+        }
+        
+        h2 {
+            font-size: 1.5rem;
+        }
+        
+        .table tbody td {
+            padding-left: 45%;
+        }
+        
+        .table tbody td::before {
+            width: 40%;
+        }
+    }
+</style>
+
+<script>
+    // Add data labels for mobile responsive table
+    document.addEventListener('DOMContentLoaded', function() {
+        if (window.innerWidth <= 768) {
+            const ths = document.querySelectorAll('thead th');
+            const tds = document.querySelectorAll('tbody td');
+            
+            tds.forEach(td => {
+                const index = Array.from(td.parentNode.children).indexOf(td);
+                if (index < ths.length) {
+                    td.setAttribute('data-label', ths[index].textContent);
+                }
+            });
+        }
+    });
+</script>
+{% endblock %}

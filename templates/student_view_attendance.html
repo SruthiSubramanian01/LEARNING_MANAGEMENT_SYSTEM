@@ -1,0 +1,185 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4 min-vh-100">
+    <div class="card shadow h-100">
+        <div class="card-header bg-info text-white">
+            <h4 class="mb-0">📊 My Attendance - Class {{ user.student_class }}</h4>
+        </div>
+        <div class="card-body">
+            <!-- Filter Form -->
+            <form method="get" class="row g-2 g-md-3 mb-4">
+                <div class="col-12 col-md-3">
+                    <label class="form-label">Specific Date</label>
+                    <input type="date" name="date" class="form-control" value="{{ date_filter }}">
+                </div>
+                <div class="col-12 col-md-3">
+                    <label class="form-label">Month</label>
+                    <select name="month" class="form-control">
+                        <option value="">All Months</option>
+                        <option value="1" {% if month_filter == '1' %}selected{% endif %}>January</option>
+                        <option value="2" {% if month_filter == '2' %}selected{% endif %}>February</option>
+                        <option value="3" {% if month_filter == '3' %}selected{% endif %}>March</option>
+                        <option value="4" {% if month_filter == '4' %}selected{% endif %}>April</option>
+                        <option value="5" {% if month_filter == '5' %}selected{% endif %}>May</option>
+                        <option value="6" {% if month_filter == '6' %}selected{% endif %}>June</option>
+                        <option value="7" {% if month_filter == '7' %}selected{% endif %}>July</option>
+                        <option value="8" {% if month_filter == '8' %}selected{% endif %}>August</option>
+                        <option value="9" {% if month_filter == '9' %}selected{% endif %}>September</option>
+                        <option value="10" {% if month_filter == '10' %}selected{% endif %}>October</option>
+                        <option value="11" {% if month_filter == '11' %}selected{% endif %}>November</option>
+                        <option value="12" {% if month_filter == '12' %}selected{% endif %}>December</option>
+                    </select>
+                </div>
+                <div class="col-12 col-md-3">
+                    <label class="form-label">Year</label>
+                    <select name="year" class="form-control">
+                        <option value="">All Years</option>
+                        {% for year in years %}
+                        <option value="{{ year }}" {% if year_filter == year|stringformat:"s" %}selected{% endif %}>{{ year }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-12 col-md-3 d-flex align-items-end gap-2">
+                    <button type="submit" class="btn btn-primary w-100">Filter</button>
+                    <a href="{% url 'student_view_attendance' %}" class="btn btn-secondary">Clear</a>
+                </div>
+            </form>
+
+            <!-- Attendance Statistics -->
+            <div class="row mb-4">
+                <div class="col-6 col-md-3 mb-3">
+                    <div class="card text-center bg-light h-100">
+                        <div class="card-body py-3">
+                            <h5 class="card-title text-primary mb-0">{{ total_days }}</h5>
+                            <p class="card-text mb-0">Total Days</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3 mb-3">
+                    <div class="card text-center bg-light h-100">
+                        <div class="card-body py-3">
+                            <h5 class="card-title text-success mb-0">{{ present_days }}</h5>
+                            <p class="card-text mb-0">Present Days</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3 mb-3">
+                    <div class="card text-center bg-light h-100">
+                        <div class="card-body py-3">
+                            <h5 class="card-title text-danger mb-0">{{ absent_days }}</h5>
+                            <p class="card-text mb-0">Absent Days</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3 mb-3">
+                    <div class="card text-center bg-light h-100">
+                        <div class="card-body py-3">
+                            <h5 class="card-title text-info mb-0">{{ attendance_percentage }}%</h5>
+                            <p class="card-text mb-0">Attendance %</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Attendance Records -->
+            {% if attendance_records %}
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Date</th>
+                            <th>Day</th>
+                            <th>Status</th>
+                            <th>Class</th>
+                            <th>Marked By</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for record in attendance_records %}
+                        <tr>
+                            <td>{{ record.date|date:"M d, Y" }}</td>
+                            <td>{{ record.date|date:"l" }}</td>
+                            <td>
+                                <span class="badge {% if record.status == 'present' %}bg-success{% else %}bg-danger{% endif %}">
+                                    {{ record.status|title }}
+                                </span>
+                            </td>
+                            <td>Class {{ record.class_name }}</td>
+                            <td>{{ record.marked_by.get_full_name }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="text-center py-4">
+                <p class="text-muted">No attendance records found.</p>
+                {% if date_filter or month_filter or year_filter %}
+                <p>Try changing your filter criteria.</p>
+                {% endif %}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<style>
+/* Ensure footer stays at bottom */
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.min-vh-100 {
+    flex: 1 0 auto;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .card-header h4 {
+        font-size: 1.2rem;
+    }
+    
+    .table th, .table td {
+        padding: 0.5rem;
+        font-size: 0.875rem;
+    }
+    
+    .badge {
+        font-size: 0.75rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .form-label {
+        font-size: 0.9rem;
+        margin-bottom: 0.3rem;
+    }
+    
+    .form-control, .form-select {
+        font-size: 0.9rem;
+        padding: 0.5rem;
+    }
+    
+    .btn {
+        padding: 0.5rem;
+    }
+    
+    .card-title {
+        font-size: 1.1rem;
+    }
+    
+    .card-text {
+        font-size: 0.8rem;
+    }
+}
+
+/* Card height adjustments */
+.h-100 {
+    height: 100% !important;
+}
+</style>
+{% endblock %}

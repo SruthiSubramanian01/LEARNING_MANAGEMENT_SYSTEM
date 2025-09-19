@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4 min-vh-100">
+    <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">📢 School Notices</h4>
+        </div>
+        <div class="card-body">
+            {% if notices %}
+            <div class="row">
+                {% for notice in notices %}
+                <div class="col-md-6 mb-3">
+                    <div class="card h-100 {% if notice.is_important %}border-warning{% endif %}">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <h6 class="card-title {% if notice.is_important %}text-warning{% endif %}">
+                                    {{ notice.title }}
+                                    {% if notice.is_important %}
+                                    <span class="badge bg-warning ms-1">Important</span>
+                                    {% endif %}
+                                </h6>
+                            </div>
+                            <p class="card-text small">{{ notice.content|truncatewords:30 }}</p>
+                        </div>
+                        <div class="card-footer bg-transparent">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <small class="text-muted">{{ notice.created_at|date:"M d" }}</small>
+                                <a href="{% url 'view_notice_detail' notice.id %}" class="btn btn-sm btn-outline-primary">
+                                    Read More
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="text-center py-4">
+                <i class="fas fa-sticky-note fa-3x text-muted mb-3"></i>
+                <p class="text-muted">No notices available at the moment.</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="footer mt-auto py-3 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <p class="text-muted mb-0">© 2023 School Management System. All rights reserved.</p>
+            </div>
+            <div class="col-md-6 text-md-end">
+                <a href="#" class="text-muted me-3">Privacy Policy</a>
+                <a href="#" class="text-muted">Terms of Service</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- Add FontAwesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+<style>
+    /* Custom CSS for sticky footer */
+    body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
+    
+    .footer {
+        margin-top: auto;
+    }
+    
+    /* Ensure content container takes available space */
+    .min-vh-100 {
+        min-height: 70vh;
+    }
+    
+    /* Original styles */
+    .card {
+        transition: transform 0.2s;
+    }
+    .card:hover {
+        transform: translateY(-3px);
+    }
+    .border-warning {
+        border: 2px solid #ffc107 !important;
+    }
+    
+    /* Additional styling for notice cards */
+    .notice-card {
+        border-left: 4px solid transparent;
+    }
+    
+    .notice-card.important {
+        border-left-color: #ffc107;
+    }
+</style>
+{% endblock %}

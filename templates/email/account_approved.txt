@@ -1,0 +1,19 @@
+Account Approved - Wisdom Learning Academy
+
+Dear {{ user.first_name }} {{ user.last_name }},
+
+We are pleased to inform you that your {{ role }} account has been approved by the administrator.
+
+Account Details:
+- Username: {{ user.username }}
+- Role: {{ role }}
+{% if user.student_class %}- Class: {{ user.student_class }}{% endif %}
+{% if user.subject %}- Subject: {{ user.subject }}{% endif %}
+
+You can now login to your account: {{ login_url }}
+
+If you have any questions or need assistance, please contact the administration office.
+
+This is an automated message. Please do not reply to this email.
+
+© 2025 Wisdom Learning Academy. All rights reserved.

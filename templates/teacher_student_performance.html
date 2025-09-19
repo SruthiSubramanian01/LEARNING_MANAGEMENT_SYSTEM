@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="card shadow">
+        <div class="card-header bg-info text-white">
+            <h4 class="mb-0">📈 Student Performance - {{ user.subject }}</h4>
+        </div>
+        <div class="card-body">
+            <!-- Filter Form -->
+            <form method="get" class="row g-3 mb-4">
+                <div class="col-md-6">
+                    <label class="form-label">Select Class</label>
+                    <select name="class_name" class="form-control">
+                        <option value="">All Classes</option>
+                        {% for value, label in user.CLASS_CHOICES %}
+                        <option value="{{ value }}" {% if selected_class == value %}selected{% endif %}>
+                            {{ label }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">&nbsp;</label>
+                    <button type="submit" class="btn btn-primary w-100">View Performance</button>
+                </div>
+            </form>
+
+            <!-- Performance Table -->
+            {% if performance_data %}
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Student</th>
+                            <th>Class</th>
+                            <th>Assignments</th>
+                            <th>Attendance</th>
+                            <th>Average Marks</th>
+                            <th>Performance</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for data in performance_data %}
+                        <tr>
+                            <td>{{ data.student.get_full_name }}</td>
+                            <td>Class {{ data.student.student_class }}</td>
+                            <td>{{ data.assignments_count }}</td>
+                            <td>{{ data.attendance_count }}</td>
+                            <td>{{ data.average_marks|floatformat:2 }}%</td>
+                            <td>
+                                {% if data.average_marks >= 80 %}
+                                <span class="badge bg-success">Excellent</span>
+                                {% elif data.average_marks >= 60 %}
+                                <span class="badge bg-primary">Good</span>
+                                {% elif data.average_marks >= 40 %}
+                                <span class="badge bg-warning">Average</span>
+                                {% else %}
+                                <span class="badge bg-danger">Needs Improvement</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="text-center py-4">
+                <p class="text-muted">No performance data available.</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

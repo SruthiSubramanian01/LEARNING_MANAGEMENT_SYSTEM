@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-warning text-white">
+                    <h4>✏️ Edit Attendance Record</h4>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Student</label>
+                            <input type="text" class="form-control" value="{{ attendance.student.get_full_name }}" disabled>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Date</label>
+                            <input type="text" class="form-control" value="{{ attendance.date }}" disabled>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Class</label>
+                            <input type="text" class="form-control" value="Class {{ attendance.class_name }}" disabled>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="id_status" class="form-label">Status</label>
+                            {{ form.status }}
+                            {% if form.status.errors %}
+                            <div class="text-danger">{{ form.status.errors }}</div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="id_marked_by" class="form-label">Marked By</label>
+                            {{ form.marked_by }}
+                            {% if form.marked_by.errors %}
+                            <div class="text-danger">{{ form.marked_by.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-warning">Update Attendance</button>
+                            <a href="{% url 'admin_view_attendance' %}" class="btn btn-secondary">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

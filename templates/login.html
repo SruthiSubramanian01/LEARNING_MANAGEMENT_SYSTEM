@@ -1,0 +1,204 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="login-hero bg-primary text-white py-4">
+    <div class="container py-3">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <h1 class="display-5 fw-bold mb-2">Welcome Back</h1>
+                <p class="lead mb-0">Sign in to access your Wisdom Learning Academy account</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6 col-xl-5">
+            <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
+                <div class="card-header bg-gradient-primary text-white text-center py-4">
+                    <h2 class="mb-0 fw-bold"><i class="bi bi-box-arrow-in-right me-2"></i>Login to Your Account</h2>
+                </div>
+                <div class="card-body p-4 p-md-5">
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert {% if message.tags == 'error' %}alert-danger{% else %}alert-{{ message.tags }}{% endif %} alert-dismissible fade show" role="alert">
+                                <i class="bi {% if message.tags == 'error' %}bi-exclamation-triangle-fill{% else %}bi-info-circle-fill{% endif %} me-2"></i>
+                                {{ message }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                    
+                    <form method="POST" class="needs-validation" novalidate>
+                        {% csrf_token %}
+                        
+                        <div class="mb-4">
+                            <label for="username" class="form-label fw-semibold">Username</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-person"></i></span>
+                                <input type="text" name="username" class="form-control form-control-lg" id="username" 
+                                       placeholder="Enter your username" required>
+                            </div>
+                            <div class="invalid-feedback">
+                                Please provide your username.
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label for="password" class="form-label fw-semibold">Password</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                                <input type="password" name="password" class="form-control form-control-lg" id="password" 
+                                       placeholder="Enter your password" required>
+                                <button class="btn btn-outline-secondary toggle-password" type="button">
+                                    <i class="bi bi-eye"></i>
+                                </button>
+                            </div>
+                            <div class="invalid-feedback">
+                                Please provide your password.
+                            </div>
+                        </div>
+                        
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-lg py-3">
+                                <i class="bi bi-box-arrow-in-right me-2"></i>Login
+                            </button>
+                        </div>
+                    </form>
+                    
+                    <div class="text-center mt-4 pt-3 border-top">
+                        <p class="mb-3">Don't have an account?</p>
+                        <div class="d-flex flex-column flex-md-row gap-2 justify-content-center">
+                            <a href="{% url 'student_register' %}" class="btn btn-outline-success">
+                                <i class="bi bi-person-plus me-2"></i>Student Registration
+                            </a>
+                            <a href="{% url 'teacher_register' %}" class="btn btn-outline-primary">
+                                <i class="bi bi-person-plus me-2"></i>Teacher Registration
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+
+<style>
+    .login-hero {
+        background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('{% static "images/login-banner.jpg" %}') center/cover no-repeat;
+    }
+    
+    .bg-gradient-primary {
+        background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%) !important;
+    }
+    
+    .form-control {
+        border-left: none;
+        padding: 12px 16px;
+        transition: all 0.3s ease;
+    }
+    
+    .input-group-text {
+        background-color: #f8f9fa;
+        border-right: none;
+    }
+    
+    .form-control:focus {
+        box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.15);
+        border-color: #86b7fe;
+    }
+    
+    .form-control:focus + .input-group-text {
+        border-color: #86b7fe;
+        background-color: #f8f9fa;
+    }
+    
+    /* Style for invalid fields - only show after validation */
+    .is-invalid {
+        border-color: #dc3545 !important;
+    }
+    
+    .invalid-feedback {
+        display: none;
+    }
+    
+    .is-invalid ~ .invalid-feedback {
+        display: block;
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .login-hero .display-5 {
+            font-size: 1.8rem;
+        }
+        
+        .card-body {
+            padding: 1.5rem;
+        }
+        
+        .d-flex.flex-md-row {
+            flex-direction: column;
+        }
+        
+        .btn {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+    }
+</style>
+
+<script>
+    // Form validation
+    document.querySelector('form').addEventListener('submit', function(event) {
+        event.preventDefault();
+        
+        let isValid = true;
+        const form = this;
+        
+        // Validate username
+        const username = document.getElementById('username');
+        if (!username.value.trim()) {
+            username.classList.add('is-invalid');
+            isValid = false;
+        } else {
+            username.classList.remove('is-invalid');
+        }
+        
+        // Validate password
+        const password = document.getElementById('password');
+        if (!password.value.trim()) {
+            password.classList.add('is-invalid');
+            isValid = false;
+        } else {
+            password.classList.remove('is-invalid');
+        }
+        
+        // If form is valid, submit it
+        if (isValid) {
+            form.submit();
+        }
+    });
+    
+    // Toggle password visibility
+    document.querySelector('.toggle-password').addEventListener('click', function() {
+        const passwordInput = document.getElementById('password');
+        const icon = this.querySelector('i');
+        
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            icon.classList.remove('bi-eye');
+            icon.classList.add('bi-eye-slash');
+        } else {
+            passwordInput.type = 'password';
+            icon.classList.remove('bi-eye-slash');
+            icon.classList.add('bi-eye');
+        }
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,341 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+    :root {
+        --primary: #4e73df;
+        --secondary: #6f42c1;
+        --success: #1cc88a;
+        --info: #36b9cc;
+        --warning: #f6c23e;
+        --danger: #e74a3b;
+        --light: #f8f9fc;
+        --dark: #5a5c69;
+        --sidebar-width: 250px;
+    }
+    
+    .dashboard-container {
+        display: flex;
+        min-height: calc(100vh - 200px);
+        margin-top: 20px;
+    }
+    
+    /* Left Sidebar Styles */
+    .sidebar {
+        width: var(--sidebar-width);
+        background: linear-gradient(180deg, var(--primary) 0%, var(--secondary) 100%);
+        color: white;
+        padding: 20px 0;
+        border-radius: 10px;
+        margin-right: 20px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .student-profile {
+        padding: 20px;
+    }
+    
+    .student-img {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        border: 4px solid rgba(255, 255, 255, 0.3);
+        object-fit: cover;
+    }
+    
+    .sidebar-menu {
+        list-style: none;
+        padding: 0;
+        margin: 20px 0;
+    }
+    
+    .sidebar-menu li {
+        margin-bottom: 5px;
+    }
+    
+    .sidebar-menu a {
+        color: rgba(255, 255, 255, 0.9);
+        text-decoration: none;
+        display: block;
+        padding: 12px 20px;
+        transition: all 0.3s;
+        font-size: 16px;
+    }
+    
+    .sidebar-menu a:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+        color: white;
+        padding-left: 25px;
+    }
+    
+    .logout-btn {
+        padding: 20px;
+        margin-top: 20px;
+    }
+    
+    /* Main Content Styles */
+    .main-content {
+        flex: 1;
+        padding: 20px;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.1);
+    }
+    
+    .welcome-header {
+        padding-bottom: 20px;
+        border-bottom: 1px solid #e3e6f0;
+        margin-bottom: 25px;
+    }
+    
+    .welcome-header h2 {
+        color: var(--dark);
+        font-weight: 700;
+        margin-bottom: 10px;
+    }
+    
+    .welcome-message h4 {
+        color: var(--primary);
+        margin-bottom: 5px;
+    }
+    
+    .welcome-message p {
+        color: var(--dark);
+        margin-bottom: 0;
+    }
+    
+    /* Quick Action Cards */
+    .quick-action-card {
+        background: white;
+        border-radius: 10px;
+        padding: 25px 20px;
+        text-align: center;
+        height: 100%;
+        transition: transform 0.3s, box-shadow 0.3s;
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.1);
+        border-left: 4px solid var(--primary);
+        margin-bottom: 20px;
+    }
+    
+    .quick-action-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 0.5rem 2rem 0 rgba(58, 59, 69, 0.2);
+    }
+    
+    .action-icon {
+        font-size: 2.5rem;
+        margin-bottom: 15px;
+        color: var(--primary);
+    }
+    
+    .quick-action-card h5 {
+        color: var(--dark);
+        font-weight: 700;
+        margin-bottom: 10px;
+    }
+    
+    .quick-action-card p {
+        color: #858796;
+        margin-bottom: 15px;
+        font-size: 0.9rem;
+    }
+    
+    .quick-action-card .btn {
+        border-radius: 20px;
+        padding: 8px 20px;
+        font-weight: 600;
+        font-size: 14px;
+    }
+    
+    /* Fee Status Card */
+    .fee-status-card {
+        border-radius: 10px;
+        padding: 20px;
+        text-align: center;
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.1);
+        margin-top: 20px;
+    }
+    
+    .fee-status-card.paid {
+        background-color: rgba(28, 200, 138, 0.1);
+        border-left: 4px solid var(--success);
+    }
+    
+    .fee-status-card.pending {
+        background-color: rgba(247, 203, 62, 0.1);
+        border-left: 4px solid var(--warning);
+    }
+    
+    .status-badge {
+        padding: 5px 15px;
+        border-radius: 20px;
+        font-size: 14px;
+        font-weight: 700;
+    }
+    
+    .status-badge.paid {
+        background-color: var(--success);
+        color: white;
+    }
+    
+    .status-badge.pending {
+        background-color: var(--warning);
+        color: white;
+    }
+    
+    /* Responsive Adjustments */
+    @media (max-width: 992px) {
+        .dashboard-container {
+            flex-direction: column;
+        }
+        
+        .sidebar {
+            width: 100%;
+            margin-right: 0;
+            margin-bottom: 20px;
+        }
+        
+        .sidebar-menu {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .sidebar-menu li {
+            margin: 5px;
+        }
+        
+        .sidebar-menu a {
+            padding: 10px 15px;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+    }
+    
+    @media (max-width: 768px) {
+        .sidebar-menu {
+            flex-direction: column;
+        }
+        
+        .welcome-header h2 {
+            font-size: 24px;
+        }
+        
+        .quick-action-card {
+            padding: 15px 10px;
+        }
+        
+        .action-icon {
+            font-size: 2rem;
+        }
+    }
+    
+    @media (max-width: 576px) {
+        .dashboard-container {
+            margin-top: 10px;
+        }
+        
+        .main-content {
+            padding: 15px;
+        }
+        
+        .quick-action-card {
+            margin-bottom: 15px;
+        }
+        
+        .welcome-header h2 {
+            font-size: 20px;
+        }
+    }
+</style>
+
+<div class="dashboard-container">
+    <!-- LEFT SIDEBAR -->
+    <div class="sidebar">
+        <div class="student-profile text-center">
+            <img src="{% static 'images/student.png' %}" alt="Student" class="student-img">
+            <h4 class="mt-2">Welcome, {{ user.username }}</h4>
+            <p class="text-muted">{{ user.first_name }} {{ user.last_name }}</p>
+            <p class="badge bg-info">Class {{ user.student_class }}</p>
+        </div>
+        <hr>
+        <ul class="sidebar-menu">
+            <li><a href="{% url 'view_assignments' %}"><i class="fas fa-tasks me-2"></i> Assignments</a></li>
+            <li><a href="{% url 'student_view_fees' %}"><i class="fas fa-money-bill me-2"></i> Fee Payments</a></li>
+            <li><a href="{% url 'student_view_results' %}"><i class="fas fa-chart-bar me-2"></i> My Results</a></li>
+            <li><a href="{% url 'view_study_materials' %}"><i class="fas fa-book me-2"></i> Study Materials</a></li>
+            <li><a href="{% url 'student_view_attendance' %}"><i class="fas fa-calendar-check me-2"></i> Attendance</a></li>
+            <li><a href="{% url 'student_notices' %}"><i class="fas fa-bullhorn me-2"></i> Notices</a></li>
+        </ul>
+        <div class="logout-btn">
+            <a href="{% url 'logout' %}" class="btn btn-danger w-100"><i class="fas fa-sign-out-alt me-2"></i> Logout</a>
+        </div>
+    </div>
+
+    <!-- RIGHT CONTENT -->
+    <div class="main-content">
+        <div class="welcome-header">
+            <h2><i class="fas fa-graduation-cap me-2"></i> Student Dashboard</h2>
+            <div class="welcome-message">
+                <h4>Welcome back, {{ user.first_name }} {{ user.last_name }}!</h4>
+                <p>Class: <strong>{{ user.student_class }}</strong></p>
+            </div>
+        </div>
+
+        <!-- QUICK ACTIONS -->
+        <div class="row">
+            <div class="col-md-4">
+                <div class="quick-action-card">
+                    <div class="action-icon"><i class="fas fa-calendar-check"></i></div>
+                    <h5>Attendance</h5>
+                    <p>View your attendance records and statistics</p>
+                    <a href="{% url 'student_view_attendance' %}" class="btn btn-primary">View Attendance</a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="quick-action-card">
+                    <div class="action-icon"><i class="fas fa-tasks"></i></div>
+                    <h5>Assignments</h5>
+                    <p>Check and submit your assignments</p>
+                    <a href="{% url 'view_assignments' %}" class="btn btn-success">View Assignments</a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="quick-action-card">
+                    <div class="action-icon"><i class="fas fa-chart-line"></i></div>
+                    <h5>Results</h5>
+                    <p>View your exam results and performance</p>
+                    <a href="{% url 'student_view_results' %}" class="btn btn-info">View Results</a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="quick-action-card">
+                    <div class="action-icon"><i class="fas fa-money-bill-wave"></i></div>
+                    <h5>Fee Details</h5>
+                    <p>Check fee status and payment history</p>
+                    <a href="{% url 'student_view_fees' %}" class="btn btn-warning">View Fees</a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="quick-action-card">
+                    <div class="action-icon"><i class="fas fa-bullhorn"></i></div>
+                    <h5>Notices</h5>
+                    <p>View important announcements</p>
+                    <a href="{% url 'student_notices' %}" class="btn btn-primary">View Notices</a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="quick-action-card">
+                    <div class="action-icon"><i class="fas fa-book"></i></div>
+                    <h5>Study Material</h5>
+                    <p>Access learning resources</p>
+                    <a href="{% url 'view_study_materials' %}" class="btn btn-success">View Materials</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

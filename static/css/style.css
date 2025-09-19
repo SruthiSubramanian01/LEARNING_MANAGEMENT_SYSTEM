@@ -1,0 +1,222 @@
+*{
+    margin: 0;
+}
+header {
+    background-color:white;
+    color: black;
+    padding: 10px 10px;    
+}
+.firstdiv-main{
+    height: 400px;
+    width: 100%;
+    background-color: rgb(191, 251, 251);
+    display: flex;
+}
+.firstdivleft{
+    height: 400px;
+    width:60%;
+    margin-top: 30px;  
+    margin-left: 50px;  
+}
+.firstdivright{
+    height: 400px;
+    width: 40%;  
+    padding: 50px;
+}
+#firstdivimg{
+    width: 250px;    
+}
+.navbar-brand{
+    padding: 20px;
+    color: black;
+    font-size: 250%;
+    font-style: bold;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+.regbtn{
+    background-color:blue;
+    color:white;
+    padding: 10px 35px;
+    margin-left: 200px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 20px;
+}
+button:hover{
+    background-color: green;
+}
+.secdiv-main{
+    background-color: rgb(124, 254, 254);    
+}
+.secdiv-title{
+    color: rgb(3, 3, 244);
+    text-align: center;
+    font-family:'Courier New', Courier, monospace;  
+}
+.secdivsub{
+    background-color: rgb(187, 250, 250);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap:2px;    
+}
+.box{
+    height: 320px;
+    width: 400px;
+    border: 2px solid black;
+    padding: 5px;
+    border-radius: 10px;
+    margin: 20px;
+}
+.footer{
+    background-color: aqua;
+    width: 100%;
+    text-align: center;
+}
+.coursefirstdiv{
+    background-color: rgb(102, 252, 237);
+    width:100%;
+    padding: 50px;
+    font-family: 'Times New Roman', Times, serif;
+    text-align: center;
+}
+.coursesecdiv-main{
+    margin:10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap:6px;   
+}
+.coursedivsub{
+    height: 470px;
+    width: 490px;
+    border: 2px solid black;
+    border-radius: 15px;
+    padding:20px;
+    font-family: 'Times New Roman', Times, serif;
+}
+.coursesecdivheading{
+    font-family: 'Times New Roman', Times, serif;
+    text-align: center;
+}
+.aboutwelcome{
+    margin-top: 8px;
+    color:blue;
+    text-align: center;
+    font-family: 'Times New Roman', Times, serif;
+}
+.welcomepara{
+    text-align: left;
+    padding:50px;
+    font-size: 20px;
+    font-family:'Times New Roman', Times, serif;
+    background-color: white;
+}
+.speciality{
+    margin-top: 5px;
+    height: 400px;
+    background-color: white;
+    padding: 20px;
+    font-size: 20px;
+    font-family: 'Times New Roman', Times, serif;
+}
+.specialityheading{
+    color: blue;
+    font-family:'Times New Roman', Times, serif;
+    text-align: center;
+}
+.ourteam{
+    margin-left: 70px;
+    padding: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    gap:40px;    
+}
+.team{
+    height: 200px;
+    width:400px;
+    border:2px solid black;
+    border-radius: 50px;
+    text-align: center;
+}
+.events{
+    text-align: center;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 20px;
+    color: green;
+}
+.img{
+    margin-left: 30px;
+    width: 450px;
+    height: 450px;
+    padding:20px;
+    border: 3px black;
+    
+}
+
+/* Custom styles for registration form */
+.card {
+    border: none;
+    border-radius: 15px;
+}
+
+.card-header {
+    border-radius: 15px 15px 0 0 !important;
+}
+
+.btn-primary {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+    padding: 12px;
+    font-weight: 600;
+}
+
+.btn-primary:hover {
+    background-color: #0b5ed7;
+    border-color: #0a58ca;
+}
+
+.toggle-password {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.invalid-feedback {
+    display: block;
+}
+
+.form-text {
+    font-size: 0.85rem;
+    color: #6c757d;
+}
+
+/* Add these styles to your existing CSS */
+.avatar-sm {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-weight: 600;
+}
+
+.table th {
+    border-top: none;
+    font-weight: 600;
+    color: #495057;
+    background-color: #f8f9fa;
+}
+
+.card {
+    border: none;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+.card-header {
+    border-radius: 0.5rem 0.5rem 0 0 !important;
+}
+
+.btn-group .btn {
+    border-radius: 0.25rem;
+}
